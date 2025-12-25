@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Software Developer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>Portfolio | Marcin Bury - Software Developer</title>
     <style>
         :root {
             --bg-primary: #0d1117;
@@ -29,171 +26,105 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
-            min-height: 100vh;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 2rem;
         }
 
         /* Header */
         header {
-            padding: 80px 0 60px;
             text-align: center;
-            border-bottom: 1px solid var(--border-color);
+            padding: 4rem 0 3rem;
         }
 
         .avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 4px solid var(--accent-blue);
-            margin-bottom: 24px;
-            background: var(--bg-tertiary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: auto;
-            margin-right: auto;
-            font-size: 48px;
+            font-size: 5rem;
+            margin-bottom: 1rem;
         }
 
-        h1 {
+        header h1 {
             font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .tagline {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
+            margin-bottom: 1rem;
         }
 
         .social-links {
             display: flex;
-            gap: 16px;
+            gap: 1.5rem;
             justify-content: center;
-            flex-wrap: wrap;
+            margin-top: 1rem;
         }
 
         .social-links a {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
+            color: var(--accent-blue);
             text-decoration: none;
-            font-weight: 500;
-            transition: all 0.2s;
+            font-size: 1rem;
         }
 
         .social-links a:hover {
-            border-color: var(--accent-blue);
-            background: var(--bg-tertiary);
+            text-decoration: underline;
         }
 
-        /* Skills Section */
-        .skills-section {
-            padding: 60px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
+        /* Section */
         .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 32px;
+            font-size: 1.8rem;
+            margin: 3rem 0 2rem;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 0.5rem;
         }
 
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-
-        .skill-category {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
-        }
-
-        .skill-category h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--accent-blue);
-        }
-
-        .skill-tags {
+        /* Project Cards */
+        .projects-grid {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .skill-tag {
-            padding: 6px 12px;
-            background: var(--bg-tertiary);
-            border-radius: 6px;
-            font-size: 0.875rem;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--text-secondary);
-        }
-
-        /* Projects Section */
-        .projects-section {
-            padding: 60px 0;
+            flex-direction: column;
+            gap: 2rem;
         }
 
         .project-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 32px;
-            margin-bottom: 24px;
-            transition: all 0.2s;
+            padding: 2rem;
+            transition: transform 0.2s, border-color 0.2s;
         }
 
         .project-card:hover {
-            border-color: var(--accent-blue);
             transform: translateY(-2px);
+            border-color: var(--accent-blue);
         }
 
         .project-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 16px;
+            margin-bottom: 1rem;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 1rem;
         }
 
         .project-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 1.4rem;
+            color: var(--text-primary);
         }
 
-        .project-badge {
-            padding: 4px 12px;
+        .project-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 0.3rem 0.6rem;
             border-radius: 20px;
             font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
+            font-weight: 500;
         }
 
         .badge-live {
@@ -202,115 +133,112 @@
         }
 
         .badge-private {
-            background: rgba(139, 148, 158, 0.2);
-            color: var(--text-secondary);
+            background: rgba(248, 81, 73, 0.2);
+            color: var(--accent-red);
+        }
+
+        .badge-new {
+            background: rgba(163, 113, 247, 0.2);
+            color: var(--accent-purple);
         }
 
         .project-description {
             color: var(--text-secondary);
-            margin-bottom: 24px;
-            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
         }
 
         .project-features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 12px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .feature {
             color: var(--text-secondary);
             font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .feature-item::before {
-            content: "▹";
+        .feature::before {
+            content: "✓";
             color: var(--accent-green);
         }
 
-        .project-tech {
+        /* Architecture Preview */
+        .architecture-preview {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .architecture-preview pre {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.7rem;
+            line-height: 1.3;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 24px;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
         }
 
         .tech-tag {
-            padding: 6px 14px;
             background: var(--bg-tertiary);
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-color);
         }
 
-        .tech-tag.python { color: #3572A5; }
-        .tech-tag.flask { color: #000; background: #fff; }
-        .tech-tag.js { color: #f7df1e; }
-        .tech-tag.cloud { color: var(--accent-purple); }
-        .tech-tag.ml { color: var(--accent-orange); }
-        .tech-tag.data { color: var(--accent-blue); }
-
+        /* Project Links */
         .project-links {
             display: flex;
-            gap: 12px;
+            gap: 1rem;
+            margin-top: 1.5rem;
             flex-wrap: wrap;
         }
 
-        .project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 500;
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
             text-decoration: none;
-            transition: all 0.2s;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: opacity 0.2s;
         }
 
-        .link-primary {
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn-primary {
             background: var(--accent-blue);
             color: var(--bg-primary);
         }
 
-        .link-primary:hover {
-            background: #79b8ff;
-        }
-
-        .link-secondary {
+        .btn-secondary {
             background: var(--bg-tertiary);
             color: var(--text-primary);
             border: 1px solid var(--border-color);
         }
 
-        .link-secondary:hover {
-            border-color: var(--accent-blue);
-        }
-
-        /* Architecture Diagram */
-        .architecture {
-            background: var(--bg-tertiary);
-            border-radius: 8px;
-            padding: 24px;
-            margin: 24px 0;
-            overflow-x: auto;
-        }
-
-        .architecture pre {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            line-height: 1.4;
-            color: var(--text-secondary);
-            margin: 0;
-        }
-
         /* Footer */
         footer {
-            padding: 40px 0;
             text-align: center;
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
             border-top: 1px solid var(--border-color);
             color: var(--text-secondary);
         }
@@ -322,81 +250,141 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            header {
-                padding: 60px 0 40px;
-            }
-
-            h1 {
+            header h1 {
                 font-size: 2rem;
             }
 
-            .project-header {
-                flex-direction: column;
+            .project-card {
+                padding: 1.5rem;
             }
 
-            .architecture pre {
-                font-size: 0.7rem;
+            .architecture-preview pre {
+                font-size: 0.55rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
+    <div class="container">
+        <header>
             <div class="avatar">👨‍💻</div>
             <h1>Marcin Bury</h1>
             <div class="social-links">
-                <a href="https://github.com/burdzik2033" target="_blank">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                </a>
-                <a href="https://www.linkedin.com/in/marcinbury/" target="_blank">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                    LinkedIn
-                </a>
-                <a href="mailto:marcin.bury@gmail.com">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
-                    Email
-                </a>
+                <a href="https://github.com/burdzik2033">GitHub</a>
+                <a href="https://www.linkedin.com/in/marcinbury/">LinkedIn</a>
+                <a href="mailto:marcin.bury@gmail.com">Email</a>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <section class="projects-section">
-        <div class="container">
+        <main>
             <h2 class="section-title">🚀 Featured Projects</h2>
 
-            <!-- Live Market Scanner -->
-            <article class="project-card">
-                <div class="project-header">
-                    <h3 class="project-title">
-                        📊 Live Market Scanner
-                    </h3>
-                    <div>
-                        <span class="project-badge badge-live">● Live</span>
-                        <span class="project-badge badge-private">Private Repo</span>
+            <div class="projects-grid">
+                <!-- Project 1: Trading Infrastructure (NEW) -->
+                <article class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">🏗️ Automated Trading Infrastructure</h3>
+                        <div class="project-badges">
+                            <span class="badge badge-live">● Production</span>
+                            <span class="badge badge-private">Private Repo</span>
+                            <span class="badge badge-new">NEW</span>
+                        </div>
                     </div>
-                </div>
-                
-                <p class="project-description">
-                    Real-time S&P 500 market analysis system combining machine learning predictions 
-                    with technical indicators and market breadth analysis. Cloud-hosted dashboard 
-                    with automated signal detection and Telegram notifications.
-                </p>
 
-                <div class="project-features">
-                    <div class="feature-item">ML Jury System (Random Forest, XGBoost, MLP)</div>
-                    <div class="feature-item">Real-time market regime detection</div>
-                    <div class="feature-item">Technical signal detection (RSI, BB, SMA)</div>
-                    <div class="feature-item">S&P 500 breadth analysis</div>
-                    <div class="feature-item">Automated Telegram alerts</div>
-                    <div class="feature-item">Sell signal warning system</div>
-                    <div class="feature-item">Trading day calendar (NYSE holidays)</div>
-                    <div class="feature-item">Proxy rotation for API reliability</div>
-                </div>
+                    <p class="project-description">
+                        Enterprise-grade CI/CD pipeline for algorithmic trading systems. Self-hosted 
+                        infrastructure with automated deployments, centralized monitoring, and 
+                        ML-powered signal generation. Processes 5,600+ tickers in under 3 minutes.
+                    </p>
 
-                <div class="architecture">
-                    <pre>
+                    <div class="project-features">
+                        <span class="feature">GitOps workflow (Infrastructure as Code)</span>
+                        <span class="feature">Self-hosted GitHub Actions runner</span>
+                        <span class="feature">Docker containerization</span>
+                        <span class="feature">Prometheus + Grafana monitoring</span>
+                        <span class="feature">Loki centralized logging</span>
+                        <span class="feature">3-model ML ensemble inference</span>
+                        <span class="feature">Ephemeral compute containers</span>
+                        <span class="feature">Automated broker connectivity</span>
+                    </div>
+
+                    <div class="architecture-preview">
+<pre>
+┌────────────────────────────────────────────────────────────────────┐
+│                        VERSION CONTROL (GitHub)                     │
+│  ┌──────────────────────────────────────────────────────────────┐  │
+│  │  .github/workflows/     docker/          monitoring/          │  │
+│  │  ├── build.yml          ├── data-collector/   configs        │  │
+│  │  └── schedule.yml       └── ml-engine/                        │  │
+│  └──────────────────────────────────────────────────────────────┘  │
+│                              │ trigger                              │
+│                              ▼                                      │
+│  ┌──────────────────────────────────────────────────────────────┐  │
+│  │            GitHub Actions (Self-hosted Runner)                │  │
+│  │   Broker Connect ──► Data Fetch ──► ML Scan ──► Cleanup       │  │
+│  └──────────────────────────────────────────────────────────────┘  │
+└────────────────────────────────────────────────────────────────────┘
+                              │ SSH
+                              ▼
+┌────────────────────────────────────────────────────────────────────┐
+│                      PRODUCTION SERVER (VPS)                        │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │
+│  │   Broker    │  │    Data     │  │  ML Engine  │   Trading       │
+│  │   Gateway   │◄─│  Collector  │  │  (Ensemble) │   Network       │
+│  └─────────────┘  └─────────────┘  └─────────────┘                 │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │
+│  │ Prometheus  │  │   Grafana   │  │    Loki     │   Monitoring    │
+│  └─────────────┘  └─────────────┘  └─────────────┘   Network       │
+└────────────────────────────────────────────────────────────────────┘
+</pre>
+                    </div>
+
+                    <div class="tech-stack">
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">GitHub Actions</span>
+                        <span class="tech-tag">Prometheus</span>
+                        <span class="tech-tag">Grafana</span>
+                        <span class="tech-tag">Loki</span>
+                        <span class="tech-tag">Python 3.11</span>
+                        <span class="tech-tag">scikit-learn</span>
+                        <span class="tech-tag">XGBoost</span>
+                        <span class="tech-tag">Linux</span>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="projects/trading-infrastructure.html" class="btn btn-primary">📖 View Architecture</a>
+                    </div>
+                </article>
+
+                <!-- Project 2: Live Market Scanner -->
+                <article class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">📊 Live Market Scanner</h3>
+                        <div class="project-badges">
+                            <span class="badge badge-live">● Live</span>
+                            <span class="badge badge-private">Private Repo</span>
+                        </div>
+                    </div>
+
+                    <p class="project-description">
+                        Real-time S&P 500 market analysis system combining machine learning predictions
+                        with technical indicators and market breadth analysis. Cloud-hosted dashboard
+                        with automated signal detection and Telegram notifications.
+                    </p>
+
+                    <div class="project-features">
+                        <span class="feature">ML Jury System (Random Forest, XGBoost, MLP)</span>
+                        <span class="feature">Real-time market regime detection</span>
+                        <span class="feature">Technical signal detection (RSI, BB, SMA)</span>
+                        <span class="feature">S&P 500 breadth analysis</span>
+                        <span class="feature">Automated Telegram alerts</span>
+                        <span class="feature">Sell signal warning system</span>
+                        <span class="feature">Trading day calendar (NYSE holidays)</span>
+                        <span class="feature">Proxy rotation for API reliability</span>
+                    </div>
+
+                    <div class="architecture-preview">
+<pre>
 ┌─────────────────────────────────────────────────────────────┐
 │                    RAILWAY.APP CLOUD                         │
 │  ┌───────────┐    ┌────────────┐    ┌──────────────────┐    │
@@ -406,7 +394,7 @@
 │        │                │                                    │
 │        ▼                ▼                                    │
 │  ┌─────────────────────────────────────────────────────┐    │
-│  │  Yahoo Finance API ◄── Webshare Proxy (rotating)   │    │
+│  │  Yahoo Finance API ◄── Webshare Proxy (rotating)    │    │
 │  └─────────────────────────────────────────────────────┘    │
 └─────────────────────────────────────────────────────────────┘
                            │
@@ -416,50 +404,33 @@
 │  │  ML Jury System │────────►│  Breadth Calculator     │    │
 │  │  (IB Scanner)   │         │  (S&P 500 Analysis)     │    │
 │  └─────────────────┘         └─────────────────────────┘    │
-└─────────────────────────────────────────────────────────────┘</pre>
-                </div>
+└─────────────────────────────────────────────────────────────┘
+</pre>
+                    </div>
 
-                <div class="project-tech">
-                    <span class="tech-tag python">Python 3.11</span>
-                    <span class="tech-tag flask">Flask</span>
-                    <span class="tech-tag ml">scikit-learn</span>
-                    <span class="tech-tag ml">XGBoost</span>
-                    <span class="tech-tag data">pandas</span>
-                    <span class="tech-tag cloud">Railway.app</span>
-                    <span class="tech-tag data">Yahoo Finance API</span>
-                    <span class="tech-tag js">Vanilla JS</span>
-                </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python 3.11</span>
+                        <span class="tech-tag">Flask</span>
+                        <span class="tech-tag">scikit-learn</span>
+                        <span class="tech-tag">XGBoost</span>
+                        <span class="tech-tag">pandas</span>
+                        <span class="tech-tag">Railway.app</span>
+                        <span class="tech-tag">Yahoo Finance API</span>
+                        <span class="tech-tag">Vanilla JS</span>
+                    </div>
 
-                <div class="project-links">
-                    <a href="https://contra-scanner.up.railway.app/" class="project-link link-primary" target="_blank">
-                        🚀 Live App
-                    </a>
-                    <a href="projects/market-scanner.html" class="project-link link-secondary">
-                        📖 View Details
-                    </a>
-                </div>
-            </article>
+                    <div class="project-links">
+                        <a href="https://contra-scanner.up.railway.app/" class="btn btn-primary" target="_blank">🚀 Live App</a>
+                        <a href="projects/market-scanner.html" class="btn btn-secondary">📖 View Details</a>
+                    </div>
+                </article>
+            </div>
+        </main>
 
-            <!-- Add more projects here -->
-            <!--
-            <article class="project-card">
-                <div class="project-header">
-                    <h3 class="project-title">🎯 Another Project</h3>
-                </div>
-                <p class="project-description">Description here...</p>
-            </article>
-            -->
-
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
+        <footer>
             <p>Built with ❤️ | © 2024 Marcin Bury</p>
-            <p style="margin-top: 8px; font-size: 0.875rem;">
-                Hosted on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
-            </p>
-        </div>
-    </footer>
+            <p style="margin-top: 0.5rem;">Hosted on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+        </footer>
+    </div>
 </body>
 </html>
