@@ -3,20 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Marcin Bury - Software Developer</title>
+    <title>Marcin Bury | Software Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #21262d;
-            --text-primary: #f0f6fc;
-            --text-secondary: #8b949e;
-            --accent-blue: #58a6ff;
-            --accent-green: #3fb950;
-            --accent-purple: #a371f7;
-            --accent-orange: #d29922;
-            --accent-red: #f85149;
-            --border-color: #30363d;
+            --bg-primary: #09090b;
+            --bg-secondary: #18181b;
+            --bg-tertiary: #27272a;
+            --bg-card: rgba(24, 24, 27, 0.6);
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-success: #22c55e;
+            --accent-warning: #f59e0b;
+            --border-color: rgba(63, 63, 70, 0.5);
+            --border-hover: rgba(63, 63, 70, 0.8);
+            --gradient-primary: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            --gradient-card: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.15);
         }
 
         * {
@@ -25,242 +36,511 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Subtle background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 100% 0%, rgba(139, 92, 246, 0.1), transparent);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 0 24px;
         }
 
         /* Header */
         header {
+            padding: 100px 0 80px;
             text-align: center;
-            padding: 4rem 0 3rem;
+            position: relative;
         }
 
         .avatar {
-            font-size: 5rem;
-            margin-bottom: 1rem;
+            width: 120px;
+            height: 120px;
+            background: var(--gradient-primary);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 32px;
+            box-shadow: var(--shadow-glow);
+            position: relative;
+        }
+
+        .avatar::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 30px;
+            background: var(--gradient-primary);
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(20px);
         }
 
         header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 32px;
         }
 
         .social-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 12px;
             justify-content: center;
-            margin-top: 1rem;
         }
 
         .social-links a {
-            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
         }
 
         .social-links a:hover {
-            text-decoration: underline;
+            background: var(--bg-tertiary);
+            border-color: var(--border-hover);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .social-links svg {
+            width: 18px;
+            height: 18px;
         }
 
         /* Section */
-        .section-title {
-            font-size: 1.8rem;
-            margin: 3rem 0 2rem;
+        main {
+            padding-bottom: 100px;
+        }
+
+        .section-header {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border-color), transparent);
         }
 
         /* Project Cards */
         .projects-grid {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 32px;
         }
 
         .project-card {
-            background: var(--bg-secondary);
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            transition: transform 0.2s, border-color 0.2s;
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .project-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent-blue);
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
         }
 
         .project-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 16px;
         }
 
         .project-title {
-            font-size: 1.4rem;
-            color: var(--text-primary);
+            font-size: 1.375rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .project-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
         }
 
         .project-badges {
             display: flex;
-            gap: 0.5rem;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
         .badge {
-            padding: 0.3rem 0.6rem;
-            border-radius: 20px;
+            padding: 6px 12px;
+            border-radius: 8px;
             font-size: 0.75rem;
-            font-weight: 500;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .badge-live {
-            background: rgba(63, 185, 80, 0.2);
-            color: var(--accent-green);
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-success);
+            border: 1px solid rgba(34, 197, 94, 0.3);
         }
 
         .badge-private {
-            background: rgba(248, 81, 73, 0.2);
-            color: var(--accent-red);
+            background: rgba(161, 161, 170, 0.1);
+            color: var(--text-muted);
+            border: 1px solid rgba(161, 161, 170, 0.2);
         }
 
         .badge-new {
-            background: rgba(163, 113, 247, 0.2);
-            color: var(--accent-purple);
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--accent-secondary);
+            border: 1px solid rgba(139, 92, 246, 0.3);
         }
 
         .project-description {
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            max-width: 90%;
         }
 
-        .project-features {
+        /* Features Grid */
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-bottom: 28px;
         }
 
         .feature {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-        }
-
-        .feature::before {
-            content: "✓";
-            color: var(--accent-green);
-        }
-
-        /* Architecture Preview */
-        .architecture-preview {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1rem;
-            overflow-x: auto;
-            margin: 1.5rem 0;
-        }
-
-        .architecture-preview pre {
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.7rem;
-            line-height: 1.3;
+            gap: 10px;
+            padding: 10px 14px;
+            background: rgba(39, 39, 42, 0.5);
+            border: 1px solid rgba(63, 63, 70, 0.3);
+            border-radius: 10px;
+            font-size: 0.875rem;
             color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .feature:hover {
+            background: rgba(39, 39, 42, 0.8);
+            border-color: var(--border-color);
+        }
+
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--gradient-primary);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-icon svg {
+            width: 12px;
+            height: 12px;
+            color: white;
+        }
+
+        /* Architecture Diagram */
+        .architecture-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 28px 0;
+            overflow-x: auto;
+        }
+
+        .architecture-container pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            line-height: 1.5;
+            color: var(--text-muted);
             margin: 0;
+            white-space: pre;
+        }
+
+        .architecture-container pre .highlight {
+            color: var(--accent-primary);
         }
 
         /* Tech Stack */
         .tech-stack {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 1.5rem 0;
+            gap: 8px;
+            margin: 24px 0;
         }
 
         .tech-tag {
+            padding: 8px 14px;
             background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
             border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
         }
 
-        /* Project Links */
+        .tech-tag:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        /* Buttons */
         .project-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 12px;
             flex-wrap: wrap;
+            margin-top: 24px;
         }
 
         .btn {
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 600;
             text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: opacity 0.2s;
-        }
-
-        .btn:hover {
-            opacity: 0.8;
+            transition: all 0.2s ease;
+            cursor: pointer;
         }
 
         .btn-primary {
-            background: var(--accent-blue);
-            color: var(--bg-primary);
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
         }
 
         .btn-secondary {
-            background: var(--bg-tertiary);
+            background: transparent;
             color: var(--text-primary);
             border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--border-hover);
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin: 28px 0;
+            padding: 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 4px;
         }
 
         /* Footer */
         footer {
             text-align: center;
-            padding: 3rem 0 2rem;
-            margin-top: 4rem;
+            padding: 48px 0;
             border-top: 1px solid var(--border-color);
-            color: var(--text-secondary);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
         }
 
         footer a {
-            color: var(--accent-blue);
+            color: var(--text-secondary);
             text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent-primary);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
+            header {
+                padding: 60px 0 50px;
+            }
+
             header h1 {
                 font-size: 2rem;
             }
 
-            .project-card {
-                padding: 1.5rem;
+            .avatar {
+                width: 90px;
+                height: 90px;
+                font-size: 2.5rem;
+                border-radius: 22px;
             }
 
-            .architecture-preview pre {
+            .social-links {
+                flex-wrap: wrap;
+            }
+
+            .project-card {
+                padding: 24px;
+            }
+
+            .project-title {
+                font-size: 1.2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .architecture-container pre {
                 font-size: 0.55rem;
             }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .project-card:nth-child(2) {
+            animation-delay: 0.1s;
         }
     </style>
 </head>
@@ -269,77 +549,137 @@
         <header>
             <div class="avatar">👨‍💻</div>
             <h1>Marcin Bury</h1>
+            <p class="subtitle">Software Developer · Trading Systems Architect</p>
             <div class="social-links">
-                <a href="https://github.com/burdzik2033">GitHub</a>
-                <a href="https://www.linkedin.com/in/marcinbury/">LinkedIn</a>
-                <a href="/cdn-cgi/l/email-protection#315c504352585f1f5344434871565c50585d1f525e5c">Email</a>
+                <a href="https://github.com/burdzik2033" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/marcinbury/" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    LinkedIn
+                </a>
+                <a href="mailto:marcin.bury@gmail.com">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+                    Email
+                </a>
             </div>
         </header>
 
         <main>
-            <h2 class="section-title">🚀 Featured Projects</h2>
+            <div class="section-header">
+                <h2>Featured Projects</h2>
+                <div class="section-line"></div>
+            </div>
 
             <div class="projects-grid">
-                <!-- Project 1: Trading Infrastructure (NEW) -->
+                <!-- Project 1: Trading Infrastructure -->
                 <article class="project-card">
                     <div class="project-header">
-                        <h3 class="project-title">🏗️ Automated Trading Infrastructure</h3>
+                        <h3 class="project-title">
+                            <span class="project-icon">🏗️</span>
+                            Automated Trading Infrastructure
+                        </h3>
                         <div class="project-badges">
-                            <span class="badge badge-live">● Production</span>
-                            <span class="badge badge-private">Private Repo</span>
-                            <span class="badge badge-new">NEW</span>
+                            <span class="badge badge-live">Production</span>
+                            <span class="badge badge-private">Private</span>
+                            <span class="badge badge-new">Dual Gateway</span>
                         </div>
                     </div>
 
                     <p class="project-description">
                         Enterprise-grade CI/CD pipeline for algorithmic trading systems. Self-hosted 
-                        infrastructure with automated deployments, centralized monitoring, and 
-                        ML-powered signal generation. Features dual-gateway architecture for 
-                        parallel stock and options trading. Processes 5,600+ tickers in under 3 minutes.
+                        infrastructure with dual-gateway architecture enabling parallel stock and options 
+                        trading. ML-powered signal generation processing 5,600+ tickers in under 3 minutes.
                     </p>
 
-                    <div class="project-features">
-                        <span class="feature">Dual-gateway broker architecture</span>
-                        <span class="feature">Self-hosted GitHub Actions runner</span>
-                        <span class="feature">7 specialized Docker containers</span>
-                        <span class="feature">Prometheus + Grafana monitoring</span>
-                        <span class="feature">6 ML models (stocks + options)</span>
-                        <span class="feature">Automated paper trading (TP/SL)</span>
-                        <span class="feature">Options spread scanner</span>
-                        <span class="feature">OCA protection orders</span>
+                    <div class="stats-row">
+                        <div class="stat">
+                            <div class="stat-value">5,600+</div>
+                            <div class="stat-label">Tickers</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">7</div>
+                            <div class="stat-label">Containers</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">6</div>
+                            <div class="stat-label">ML Models</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">~3min</div>
+                            <div class="stat-label">Pipeline</div>
+                        </div>
                     </div>
 
-                    <div class="architecture-preview">
+                    <div class="features-grid">
+                        <div class="feature">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            Dual-gateway broker architecture
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            Self-hosted GitHub Actions
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            Options spread scanner
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            Prometheus + Grafana monitoring
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            Paper trading with TP/SL
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            OCA protection orders
+                        </div>
+                    </div>
+
+                    <div class="architecture-container">
 <pre>
-┌────────────────────────────────────────────────────────────────────┐
-│                        VERSION CONTROL (GitHub)                     │
-│  ┌──────────────────────────────────────────────────────────────┐  │
-│  │  .github/workflows/     docker/          monitoring/          │  │
-│  │  ├── schedule.yml       ├── ml-scanner/       configs        │  │
-│  │  ├── paper-trading.yml  ├── options-scanner/                  │  │
-│  │  ├── options-trading.yml├── stock-trader/                     │  │
-│  │  └── gateway-control.yml└── options-trader/                   │  │
-│  └──────────────────────────────────────────────────────────────┘  │
-│                              │ trigger                              │
-│                              ▼                                      │
-│  ┌──────────────────────────────────────────────────────────────┐  │
-│  │            GitHub Actions (Self-hosted Runner)                │  │
-│  │   [Gateway 1: Stocks] ──► ML Scan ──► Paper Trade            │  │
-│  │   [Gateway 2: Options] ──► Spread Scan ──► OCA Orders        │  │
-│  └──────────────────────────────────────────────────────────────┘  │
-└────────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌────────────────────────────────────────────────────────────────────┐
-│                      PRODUCTION SERVER (VPS)                        │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │
-│  │ IB Gateway 1│  │ IB Gateway 2│  │  ML Engine  │   Trading       │
-│  │  (Stocks)   │  │  (Options)  │  │  (6 models) │   Network       │
-│  └─────────────┘  └─────────────┘  └─────────────┘                 │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │
-│  │ Prometheus  │  │   Grafana   │  │    Loki     │   Monitoring    │
-│  └─────────────┘  └─────────────┘  └─────────────┘   Network       │
-└────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────┐
+│                          VERSION CONTROL (GitHub)                        │
+│  ┌───────────────────────────────────────────────────────────────────┐  │
+│  │  workflows/                    docker/                             │  │
+│  │  ├── schedule.yml              ├── ml-scanner/                     │  │
+│  │  ├── paper-trading.yml         ├── options-scanner/                │  │
+│  │  ├── options-trading.yml       ├── stock-trader/                   │  │
+│  │  └── gateway-control.yml       └── options-trader/                 │  │
+│  └───────────────────────────────────────────────────────────────────┘  │
+│                                    │                                     │
+│  ┌───────────────────────────────────────────────────────────────────┐  │
+│  │               GitHub Actions (Self-hosted Runner)                  │  │
+│  │   [Gateway 1: Stocks] ──► ML Scan ──► Paper Trade                 │  │
+│  │   [Gateway 2: Options] ──► Spread Scan ──► OCA Orders             │  │
+│  └───────────────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────────┘
+                                     │
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        PRODUCTION SERVER (VPS)                           │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐                   │
+│  │  IB Gateway 1│  │  IB Gateway 2│  │   ML Engine  │   Trading         │
+│  │   (Stocks)   │  │   (Options)  │  │  (6 models)  │   Network         │
+│  └──────────────┘  └──────────────┘  └──────────────┘                   │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐                   │
+│  │  Prometheus  │  │   Grafana    │  │     Loki     │   Monitoring      │
+│  └──────────────┘  └──────────────┘  └──────────────┘                   │
+└─────────────────────────────────────────────────────────────────────────┘
 </pre>
                     </div>
 
@@ -348,27 +688,31 @@
                         <span class="tech-tag">GitHub Actions</span>
                         <span class="tech-tag">Prometheus</span>
                         <span class="tech-tag">Grafana</span>
-                        <span class="tech-tag">Loki</span>
                         <span class="tech-tag">Python 3.11</span>
                         <span class="tech-tag">scikit-learn</span>
                         <span class="tech-tag">XGBoost</span>
                         <span class="tech-tag">LightGBM</span>
                         <span class="tech-tag">ib_insync</span>
-                        <span class="tech-tag">Linux</span>
                     </div>
 
                     <div class="project-links">
-                        <a href="projects/trading-infrastructure.html" class="btn btn-primary">📖 View Architecture</a>
+                        <a href="projects/trading-infrastructure.html" class="btn btn-primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                            View Architecture
+                        </a>
                     </div>
                 </article>
 
                 <!-- Project 2: Live Market Scanner -->
                 <article class="project-card">
                     <div class="project-header">
-                        <h3 class="project-title">📊 Live Market Scanner</h3>
+                        <h3 class="project-title">
+                            <span class="project-icon">📊</span>
+                            Live Market Scanner
+                        </h3>
                         <div class="project-badges">
-                            <span class="badge badge-live">● Live</span>
-                            <span class="badge badge-private">Private Repo</span>
+                            <span class="badge badge-live">Live</span>
+                            <span class="badge badge-private">Private</span>
                         </div>
                     </div>
 
@@ -378,39 +722,67 @@
                         with automated signal detection and Telegram notifications.
                     </p>
 
-                    <div class="project-features">
-                        <span class="feature">ML Jury System (Random Forest, XGBoost, MLP)</span>
-                        <span class="feature">Real-time market regime detection</span>
-                        <span class="feature">Technical signal detection (RSI, BB, SMA)</span>
-                        <span class="feature">S&P 500 breadth analysis</span>
-                        <span class="feature">Automated Telegram alerts</span>
-                        <span class="feature">Sell signal warning system</span>
-                        <span class="feature">Trading day calendar (NYSE holidays)</span>
-                        <span class="feature">Proxy rotation for API reliability</span>
+                    <div class="features-grid">
+                        <div class="feature">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            ML Jury System (RF, XGBoost, MLP)
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            Real-time market regime detection
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            Technical signals (RSI, BB, SMA)
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            S&P 500 breadth analysis
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            Automated Telegram alerts
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                            VIX momentum tracking
+                        </div>
                     </div>
 
-                    <div class="architecture-preview">
+                    <div class="architecture-container">
 <pre>
-┌─────────────────────────────────────────────────────────────┐
-│                    RAILWAY.APP CLOUD                         │
-│  ┌───────────┐    ┌────────────┐    ┌──────────────────┐    │
-│  │  Flask    │◄──►│ Background │◄──►│  Data Storage    │    │
-│  │  Web UI   │    │   Worker   │    │  /app/data/      │    │
-│  └───────────┘    └────────────┘    └──────────────────┘    │
-│        │                │                                    │
-│        ▼                ▼                                    │
-│  ┌─────────────────────────────────────────────────────┐    │
-│  │  Yahoo Finance API ◄── Webshare Proxy (rotating)    │    │
-│  └─────────────────────────────────────────────────────┘    │
-└─────────────────────────────────────────────────────────────┘
-                           │
-┌─────────────────────────────────────────────────────────────┐
-│                    LOCAL COMPONENTS                          │
-│  ┌─────────────────┐         ┌─────────────────────────┐    │
-│  │  ML Jury System │────────►│  Breadth Calculator     │    │
-│  │  (IB Scanner)   │         │  (S&P 500 Analysis)     │    │
-│  └─────────────────┘         └─────────────────────────┘    │
-└─────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│                       RAILWAY.APP CLOUD                           │
+│  ┌────────────┐    ┌─────────────┐    ┌───────────────────┐      │
+│  │   Flask    │◄──►│  Background │◄──►│   Data Storage    │      │
+│  │   Web UI   │    │    Worker   │    │   /app/data/      │      │
+│  └────────────┘    └─────────────┘    └───────────────────┘      │
+│        │                  │                                       │
+│        ▼                  ▼                                       │
+│  ┌────────────────────────────────────────────────────────┐      │
+│  │   Yahoo Finance API ◄── Webshare Proxy (rotating)      │      │
+│  └────────────────────────────────────────────────────────┘      │
+└──────────────────────────────────────────────────────────────────┘
+                            │
+┌──────────────────────────────────────────────────────────────────┐
+│                       VPS COMPONENTS                              │
+│  ┌──────────────────┐           ┌──────────────────────────┐     │
+│  │   ML Jury System │──────────►│   Breadth Calculator     │     │
+│  │   (IB Scanner)   │           │   (S&P 500 Analysis)     │     │
+│  └──────────────────┘           └──────────────────────────┘     │
+└──────────────────────────────────────────────────────────────────┘
 </pre>
                     </div>
 
@@ -422,18 +794,28 @@
                         <span class="tech-tag">pandas</span>
                         <span class="tech-tag">Railway.app</span>
                         <span class="tech-tag">Yahoo Finance API</span>
-                        <span class="tech-tag">Vanilla JS</span>
                     </div>
 
                     <div class="project-links">
-                        <a href="https://contra-scanner.up.railway.app/" class="btn btn-primary" target="_blank">🚀 Live App</a>
-                        <a href="projects/market-scanner.html" class="btn btn-secondary">📖 View Details</a>
+                        <a href="https://contra-scanner.up.railway.app/" class="btn btn-primary" target="_blank">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                            Live App
+                        </a>
+                        <a href="projects/market-scanner.html" class="btn btn-secondary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                            View Details
+                        </a>
                     </div>
                 </article>
             </div>
         </main>
 
         <footer>
-            <p>Built with ❤️ | © 2024 Marcin Bury</p>
-            <p style="margin-top: 0.5rem;">Hosted on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
- 
+            <p>Built with precision · © 2024 Marcin Bury</p>
+            <p style="margin-top: 8px;">
+                <a href="https://pages.github.com/" target="_blank">Hosted on GitHub Pages</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
