@@ -1,37 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Infrastructure | Marcin Bury</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Infrastructure | Marcin Bury Portfolio</title>
     <style>
         :root {
-            --bg-primary: #09090b;
-            --bg-secondary: #18181b;
-            --bg-tertiary: #27272a;
-            --bg-card: rgba(24, 24, 27, 0.6);
-            --text-primary: #fafafa;
+            --bg-primary: #0a0a0b;
+            --bg-secondary: rgba(255, 255, 255, 0.03);
+            --bg-tertiary: rgba(255, 255, 255, 0.06);
+            --text-primary: #f0f6fc;
             --text-secondary: #a1a1aa;
-            --text-muted: #71717a;
-            --accent-primary: #3b82f6;
-            --accent-secondary: #8b5cf6;
-            --accent-success: #22c55e;
-            --accent-warning: #f59e0b;
-            --accent-orange: #f97316;
-            --border-color: rgba(63, 63, 70, 0.5);
-            --border-hover: rgba(63, 63, 70, 0.8);
-            --gradient-primary: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            --gradient-stocks: linear-gradient(135deg, #3b82f6, #06b6d4);
-            --gradient-options: linear-gradient(135deg, #f97316, #f59e0b);
-            --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.15);
+            --accent-blue: #3b82f6;
+            --accent-green: #22c55e;
+            --accent-purple: #a855f7;
+            --accent-orange: #d29922;
+            --accent-red: #ef4444;
+            --border-color: rgba(255, 255, 255, 0.08);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-primary);
@@ -39,623 +35,439 @@
             line-height: 1.6;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.12), transparent),
-                radial-gradient(ellipse 60% 40% at 100% 0%, rgba(139, 92, 246, 0.08), transparent);
-            pointer-events: none;
-            z-index: -1;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
         }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-
-        /* Back Link */
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 500;
-            padding: 24px 0;
-            transition: color 0.2s;
-        }
-        .back-link:hover { color: var(--accent-primary); }
-        .back-link svg { width: 16px; height: 16px; }
 
         /* Header */
-        header {
+        .header {
             text-align: center;
-            padding: 40px 0 60px;
+            padding: 3rem 0;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 60px;
+            margin-bottom: 3rem;
         }
 
-        header h1 {
-            font-size: 2.75rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 16px;
-            background: var(--gradient-primary);
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        header p {
+        .header p {
             color: var(--text-secondary);
-            font-size: 1.125rem;
-            max-width: 700px;
-            margin: 0 auto 24px;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Badges */
         .badges {
             display: flex;
-            gap: 10px;
-            justify-content: center;
+            gap: 0.5rem;
             flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1.5rem;
         }
 
         .badge {
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
-        .badge-production { background: rgba(34, 197, 94, 0.15); color: var(--accent-success); border: 1px solid rgba(34, 197, 94, 0.3); }
-        .badge-private { background: rgba(161, 161, 170, 0.1); color: var(--text-muted); border: 1px solid rgba(161, 161, 170, 0.2); }
-        .badge-new { background: rgba(139, 92, 246, 0.15); color: var(--accent-secondary); border: 1px solid rgba(139, 92, 246, 0.3); }
+        .badge-production { background: rgba(63, 185, 80, 0.2); color: var(--accent-green); }
+        .badge-private { background: rgba(248, 81, 73, 0.2); color: var(--accent-red); }
+        .badge-cloud { background: rgba(88, 166, 255, 0.2); color: var(--accent-blue); }
 
         /* Section */
-        section { margin-bottom: 80px; }
+        .section {
+            margin-bottom: 4rem;
+        }
 
         .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 32px;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-blue);
+            display: inline-block;
+        }
+
+        /* Architecture Diagram */
+        .architecture-diagram {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .architecture-diagram pre {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            color: var(--text-secondary);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-blue);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-blue);
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 0.5rem;
         }
 
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, var(--border-color), transparent);
+        .card-content {
+            color: var(--text-secondary);
         }
 
-        /* Metrics Grid */
+        .card-content ul {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .card-content li {
+            padding: 0.3rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .card-content li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Pipeline Flow */
+        .pipeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .pipeline-step {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .pipeline-step.active {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 20px rgba(63, 185, 80, 0.2);
+        }
+
+        .pipeline-step-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .pipeline-step-time {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .pipeline-arrow {
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+        }
+
+        /* Metrics */
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 16px;
-            margin-top: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
 
         .metric {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 24px 16px;
+            border-radius: 8px;
+            padding: 1.5rem;
             text-align: center;
-            transition: all 0.2s;
-        }
-
-        .metric:hover {
-            border-color: var(--accent-primary);
-            transform: translateY(-2px);
         }
 
         .metric-value {
             font-size: 2rem;
             font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--accent-blue);
         }
 
         .metric-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-top: 8px;
-        }
-
-        /* Architecture Diagram */
-        .architecture-container {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 32px;
-            overflow-x: auto;
-            margin: 32px 0;
-        }
-
-        .architecture-container pre {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
-            line-height: 1.5;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        /* Dual Pipeline */
-        .dual-pipeline {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin: 32px 0;
-        }
-
-        .pipeline-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 28px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .pipeline-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-        }
-
-        .pipeline-card.stocks::before { background: var(--gradient-stocks); }
-        .pipeline-card.options::before { background: var(--gradient-options); }
-
-        .pipeline-card h4 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .pipeline-card.stocks h4 { color: var(--accent-primary); }
-        .pipeline-card.options h4 { color: var(--accent-orange); }
-
-        .pipeline-card ul {
-            list-style: none;
-        }
-
-        .pipeline-card li {
-            padding: 10px 0;
-            padding-left: 28px;
-            position: relative;
             color: var(--text-secondary);
             font-size: 0.9rem;
-            border-bottom: 1px solid rgba(63, 63, 70, 0.3);
-        }
-
-        .pipeline-card li:last-child { border-bottom: none; }
-
-        .pipeline-card li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .pipeline-card.stocks li::before { background: var(--accent-primary); }
-        .pipeline-card.options li::before { background: var(--accent-orange); }
-
-        /* Cards Grid */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 24px;
-            transition: all 0.2s;
-        }
-
-        .card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-        }
-
-        .card-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--accent-primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card-content {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .card-content p {
-            margin-bottom: 12px;
-        }
-
-        .card-content ul {
-            list-style: none;
-        }
-
-        .card-content li {
-            padding: 6px 0;
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .card-content li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: var(--accent-success);
+            margin-top: 0.3rem;
         }
 
         /* Table */
         .table-container {
             overflow-x: auto;
-            margin: 32px 0;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
+            margin-top: 1.5rem;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             background: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         th, td {
-            padding: 16px 20px;
+            padding: 1rem;
             text-align: left;
+            border-bottom: 1px solid var(--border-color);
         }
 
         th {
             background: var(--bg-tertiary);
             font-weight: 600;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-secondary);
+            color: var(--text-primary);
         }
 
         td {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        tr:hover td { background: rgba(39, 39, 42, 0.5); }
-
-        /* Tech Stack */
-        .tech-section { margin-bottom: 28px; }
-
-        .tech-section h4 {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 12px;
-        }
-
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .tech-tag {
-            padding: 10px 16px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            transition: all 0.2s;
-        }
-
-        .tech-tag:hover {
-            border-color: var(--accent-primary);
-            color: var(--accent-primary);
-        }
-
-        /* Pipeline Flow */
-        .pipeline-flow {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin: 32px 0;
-            flex-wrap: wrap;
-        }
-
-        .pipeline-step {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 16px 24px;
-            text-align: center;
-            min-width: 140px;
-            transition: all 0.2s;
-        }
-
-        .pipeline-step:hover {
-            border-color: var(--accent-primary);
-            transform: translateY(-2px);
-        }
-
-        .pipeline-step.active {
-            border-color: var(--accent-success);
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
-        }
-
-        .pipeline-step-title {
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 4px;
-        }
-
-        .pipeline-step-time {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .pipeline-arrow {
-            color: var(--accent-primary);
-            font-size: 1.25rem;
         }
 
         /* Footer */
-        footer {
+        .footer {
             text-align: center;
-            padding: 48px 0;
+            padding: 2rem 0;
+            margin-top: 4rem;
             border-top: 1px solid var(--border-color);
-            margin-top: 80px;
+            color: var(--text-secondary);
         }
 
-        footer p { color: var(--text-muted); font-size: 0.875rem; }
-        footer a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
-        footer a:hover { color: var(--accent-primary); }
+        .footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            .metrics-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
         @media (max-width: 768px) {
-            header h1 { font-size: 2rem; }
-            .metrics-grid { grid-template-columns: repeat(2, 1fr); }
-            .dual-pipeline { grid-template-columns: 1fr; }
-            .cards-grid { grid-template-columns: 1fr; }
-            .pipeline-flow { flex-direction: column; }
-            .pipeline-arrow { transform: rotate(90deg); }
-            .architecture-container pre { font-size: 0.55rem; }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .architecture-diagram pre {
+                font-size: 0.65rem;
+            }
+
+            .pipeline {
+                flex-direction: column;
+            }
+
+            .pipeline-arrow {
+                transform: rotate(90deg);
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="../index.html" class="back-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            Back to Portfolio
-        </a>
+        <a href="index.html" class="back-link">← Back to Portfolio</a>
 
-        <header>
+        <header class="header">
             <h1>🏗️ Automated Trading Infrastructure</h1>
             <p>
-                Enterprise-grade CI/CD pipeline for algorithmic trading. Dual-gateway architecture 
-                supporting parallel stock and options trading with ML-powered signal generation.
+                Enterprise-grade CI/CD pipeline for algorithmic trading systems. 
+                Self-hosted infrastructure with automated deployments, centralized monitoring, 
+                and ML-powered signal generation.
             </p>
             <div class="badges">
                 <span class="badge badge-production">● Production</span>
                 <span class="badge badge-private">Private Repository</span>
-                <span class="badge badge-new">Dual Gateway</span>
+                <span class="badge badge-cloud">Self-Hosted Cloud</span>
             </div>
         </header>
 
-        <!-- Metrics -->
-        <section>
+        <!-- Overview Section -->
+        <section class="section">
             <h2 class="section-title">System Overview</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 16px;">
-                A complete DevOps solution integrating broker connectivity, machine learning inference, 
-                paper trading execution, and real-time monitoring into a unified automated pipeline.
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                A complete DevOps solution for running algorithmic trading workloads. The system 
+                integrates broker connectivity, machine learning inference, and real-time monitoring 
+                into a unified, automated pipeline.
             </p>
+
             <div class="metrics-grid">
                 <div class="metric">
-                    <div class="metric-value">~3min</div>
-                    <div class="metric-label">Pipeline</div>
+                    <div class="metric-value">~3 min</div>
+                    <div class="metric-label">Pipeline Execution</div>
                 </div>
                 <div class="metric">
                     <div class="metric-value">5,600+</div>
-                    <div class="metric-label">Tickers</div>
+                    <div class="metric-label">Tickers Analyzed</div>
                 </div>
                 <div class="metric">
-                    <div class="metric-value">6</div>
-                    <div class="metric-label">ML Models</div>
+                    <div class="metric-value">3</div>
+                    <div class="metric-label">ML Models (Ensemble)</div>
                 </div>
                 <div class="metric">
-                    <div class="metric-value">7</div>
-                    <div class="metric-label">Containers</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">2</div>
-                    <div class="metric-label">Gateways</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">5</div>
-                    <div class="metric-label">Workflows</div>
+                    <div class="metric-value">99.9%</div>
+                    <div class="metric-label">Uptime Target</div>
                 </div>
             </div>
         </section>
 
-        <!-- Architecture -->
-        <section>
+        <!-- Architecture Diagram -->
+        <section class="section">
             <h2 class="section-title">Architecture Diagram</h2>
-            <div class="architecture-container">
+            <div class="architecture-diagram">
 <pre>
-┌────────────────────────────────────────────────────────────────────────────────────┐
-│                               VERSION CONTROL (GitHub)                              │
-│  ┌──────────────────────────────────────────────────────────────────────────────┐  │
-│  │  Repository                                                                   │  │
-│  │  ├── .github/workflows/              # CI/CD pipeline definitions             │  │
-│  │  │   ├── schedule.yml                # Daily stock scanning                   │  │
-│  │  │   ├── paper-trading.yml           # XLS-based paper trading                │  │
-│  │  │   ├── stock-paper-trading.yml     # IBKR stock paper trading               │  │
-│  │  │   ├── options-trading.yml         # Options scan + paper trading           │  │
-│  │  │   └── gateway-control.yml         # Manual gateway management              │  │
-│  │  │                                                                            │  │
-│  │  └── docker/                         # Containerized services                 │  │
-│  │      ├── ibkr-data-fetch/            # IV percentile data collection          │  │
-│  │      ├── ml-scanner/                 # Stock ML ensemble (3 models)           │  │
-│  │      ├── options-scanner/            # Options spread scanner (3 models)      │  │
-│  │      ├── stock-trader/               # Stock paper trading with TP/SL         │  │
-│  │      └── options-trader/             # Options spread execution               │  │
-│  └──────────────────────────────────────────────────────────────────────────────┘  │
-│                                          │ trigger                                  │
-└──────────────────────────────────────────┼──────────────────────────────────────────┘
-                                           ▼
-┌────────────────────────────────────────────────────────────────────────────────────┐
-│                      GitHub Actions (Self-hosted Runner)                            │
-│  ┌──────────────────────────────────────────────────────────────────────────────┐  │
-│  │                                                                               │  │
-│  │   STOCK PIPELINE (Gateway 1)               OPTIONS PIPELINE (Gateway 2)       │  │
-│  │   ┌───────────────────────────┐            ┌───────────────────────────┐      │  │
-│  │   │ IB Gateway 1              │            │ IB Gateway 2              │      │  │
-│  │   │      ▼                    │            │      ▼                    │      │  │
-│  │   │ Data Fetch                │            │ Options Scanner           │      │  │
-│  │   │      ▼                    │            │      ▼                    │      │  │
-│  │   │ ML Scanner (v32d)         │            │ Options Trader            │      │  │
-│  │   │      ▼                    │            │      ▼                    │      │  │
-│  │   │ Stock Trader (TP/SL)      │            │ OCA Protection Orders     │      │  │
-│  │   └───────────────────────────┘            └───────────────────────────┘      │  │
-│  │                                                                               │  │
-│  └──────────────────────────────────────────────────────────────────────────────┘  │
-└────────────────────────────────────────────────────────────────────────────────────┘
-                                           │ Docker Network
-                                           ▼
-┌────────────────────────────────────────────────────────────────────────────────────┐
-│                             PRODUCTION SERVER (VPS)                                 │
-│                                                                                     │
-│  ┌───────────────────────────────────────────────────────────────────────────────┐ │
-│  │                         Docker Network: trading                                │ │
-│  │                                                                                │ │
-│  │  ┌──────────────────┐  ┌──────────────────┐                                   │ │
-│  │  │   IB Gateway 1   │  │   IB Gateway 2   │    Dual Gateway Architecture      │ │
-│  │  │     (Stocks)     │  │    (Options)     │                                   │ │
-│  │  │                  │  │                  │    • Parallel processing          │ │
-│  │  │   • Data fetch   │  │  • Spread scan   │    • Independent sessions         │ │
-│  │  │   • ML scanning  │  │  • Order exec    │    • VNC remote access            │ │
-│  │  │   • Paper trade  │  │  • Paper trade   │                                   │ │
-│  │  └──────────────────┘  └──────────────────┘                                   │ │
-│  │           │                     │                                              │ │
-│  │  ┌────────┴─────────────────────┴────────┐                                    │ │
-│  │  │                                        │   Ephemeral Compute                │ │
-│  │  │  ┌──────────────┐ ┌──────────────┐    │                                    │ │
-│  │  │  │  ML Scanner  │ │   Options    │    │   • On-demand execution            │ │
-│  │  │  │   (v32d)     │ │   Scanner    │    │   • Auto cleanup (--rm)            │ │
-│  │  │  │  RF+MLP+XGB  │ │ XGB+LGBM+RF  │    │   • Resource limits                │ │
-│  │  │  └──────────────┘ └──────────────┘    │                                    │ │
-│  │  │                                        │                                    │ │
-│  │  │  ┌──────────────┐ ┌──────────────┐    │   Paper Trading                    │ │
-│  │  │  │    Stock     │ │   Options    │    │                                    │ │
-│  │  │  │   Trader     │ │   Trader     │    │   • TP/SL bracket orders           │ │
-│  │  │  │  Dual Stop   │ │  OCA groups  │    │   • Position management            │ │
-│  │  │  └──────────────┘ └──────────────┘    │                                    │ │
-│  │  └────────────────────────────────────────┘                                   │ │
-│  │                          │                                                     │ │
-│  │                          ▼                                                     │ │
-│  │             ┌────────────────────────────┐                                    │ │
-│  │             │     Shared Data Volume     │                                    │ │
-│  │             │   • IV percentile data     │                                    │ │
-│  │             │   • ML signals & scores    │                                    │ │
-│  │             │   • Options recommendations│                                    │ │
-│  │             │   • Execution logs         │                                    │ │
-│  │             └────────────────────────────┘                                    │ │
-│  └───────────────────────────────────────────────────────────────────────────────┘ │
-│                                                                                     │
-│  ┌───────────────────────────────────────────────────────────────────────────────┐ │
-│  │                       Docker Network: monitoring                               │ │
-│  │                                                                                │ │
-│  │  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌─────────────────┐  │ │
-│  │  │Prometheus │ │  Grafana  │ │    Loki   │ │ Promtail  │ │  Alertmanager   │  │ │
-│  │  │           │ │           │ │           │ │           │ │                 │  │ │
-│  │  │  Metrics  │ │ Dashboards│ │    Logs   │ │ Log Agent │ │  Notifications  │  │ │
-│  │  └───────────┘ └───────────┘ └───────────┘ └───────────┘ └─────────────────┘  │ │
-│  └───────────────────────────────────────────────────────────────────────────────┘ │
-└────────────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│                              VERSION CONTROL (GitHub)                             │
+│  ┌────────────────────────────────────────────────────────────────────────────┐  │
+│  │  Repository                                                                 │  │
+│  │  ├── docker/                    # Containerized services                    │  │
+│  │  │   ├── data-collector/        # Market data ingestion                     │  │
+│  │  │   ├── ml-engine/             # Signal generation (3-model ensemble)      │  │
+│  │  │   └── monitoring/            # Observability stack configs               │  │
+│  │  └── .github/workflows/         # CI/CD pipeline definitions                │  │
+│  └────────────────────────────────────────────────────────────────────────────┘  │
+│                                        │                                          │
+│                                        │ trigger                                  │
+│                                        ▼                                          │
+│  ┌────────────────────────────────────────────────────────────────────────────┐  │
+│  │                           GitHub Actions (CI/CD)                            │  │
+│  │                                                                             │  │
+│  │    ┌─────────────────┐         ┌──────────────────────────────────────┐    │  │
+│  │    │  Build Pipeline │         │      Scheduled Trading Pipeline       │    │  │
+│  │    │                 │         │                                       │    │  │
+│  │    │ • Build images  │         │  Broker ──► Data ──► ML ──► Cleanup  │    │  │
+│  │    │ • Run tests     │         │  Connect    Fetch    Scan    Session │    │  │
+│  │    │ • Push registry │         │                                       │    │  │
+│  │    └─────────────────┘         └──────────────────────────────────────┘    │  │
+│  └────────────────────────────────────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────────────────────────────────────┘
+                                         │
+                                         │ SSH (Self-hosted Runner)
+                                         ▼
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│                            PRODUCTION SERVER (VPS)                                │
+│                                                                                   │
+│  ┌─────────────────────────────────────────────────────────────────────────────┐ │
+│  │                        Docker Network: trading                               │ │
+│  │                                                                              │ │
+│  │   ┌───────────────┐    ┌───────────────┐    ┌───────────────┐               │ │
+│  │   │    Broker     │    │     Data      │    │   ML Engine   │               │ │
+│  │   │   Gateway     │◄───│   Collector   │    │               │               │ │
+│  │   │               │    │               │    │  • Model A    │               │ │
+│  │   │  API: 4004    │    │  5,600+       │    │  • Model B    │               │ │
+│  │   │  VNC: 5900    │    │  tickers/run  │    │  • Model C    │               │ │
+│  │   │               │    │               │    │  (Ensemble)   │               │ │
+│  │   │  ON-DEMAND    │    │   EPHEMERAL   │    │   EPHEMERAL   │               │ │
+│  │   └───────────────┘    └───────────────┘    └───────────────┘               │ │
+│  │           │                    │                    │                        │ │
+│  │           └────────────────────┴────────────────────┘                        │ │
+│  │                                │                                             │ │
+│  │                                ▼                                             │ │
+│  │                    ┌───────────────────────┐                                 │ │
+│  │                    │   Shared Data Volume  │                                 │ │
+│  │                    │   • Raw market data   │                                 │ │
+│  │                    │   • ML signals        │                                 │ │
+│  │                    │   • Execution logs    │                                 │ │
+│  │                    └───────────────────────┘                                 │ │
+│  └─────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                   │
+│  ┌─────────────────────────────────────────────────────────────────────────────┐ │
+│  │                      Docker Network: monitoring                              │ │
+│  │                                                                              │ │
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────────────┐  │ │
+│  │  │Prometheus│ │ Grafana  │ │   Loki   │ │Promtail  │ │   Alertmanager   │  │ │
+│  │  │  :9090   │ │  :3000   │ │  :3100   │ │          │ │      :9093       │  │ │
+│  │  │          │ │          │ │          │ │          │ │                  │  │ │
+│  │  │ Metrics  │ │Dashboards│ │   Logs   │ │Log Agent │ │  Notifications   │  │ │
+│  │  └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────────────┘  │ │
+│  │       │            │            │            │               │              │ │
+│  │       └────────────┴────────────┴────────────┴───────────────┘              │ │
+│  │                                 │                                            │ │
+│  │                                 ▼                                            │ │
+│  │                    ┌───────────────────────┐                                 │ │
+│  │                    │    cAdvisor + Node    │                                 │ │
+│  │                    │       Exporter        │                                 │ │
+│  │                    │  (System Metrics)     │                                 │ │
+│  │                    └───────────────────────┘                                 │ │
+│  └─────────────────────────────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────────────────────────┘
 </pre>
             </div>
         </section>
 
-        <!-- Dual Pipeline -->
-        <section>
-            <h2 class="section-title">Dual Pipeline Architecture</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 24px;">
-                Two independent trading pipelines with dedicated broker gateways, ML models, 
-                and execution containers enabling parallel processing without interference.
+        <!-- Pipeline Section -->
+        <section class="section">
+            <h2 class="section-title">Trading Pipeline Flow</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                The pipeline executes as a directed acyclic graph (DAG) with dependency management 
+                and automatic cleanup. Each stage validates prerequisites before execution.
             </p>
-            <div class="dual-pipeline">
-                <div class="pipeline-card stocks">
-                    <h4>📈 Stock Pipeline (Gateway 1)</h4>
-                    <ul>
-                        <li>IV percentile data collection</li>
-                        <li>5,600+ tickers scanning</li>
-                        <li>3-model ML ensemble (RF, MLP, XGBoost)</li>
-                        <li>Technical signals (RSI, BB, SMA)</li>
-                        <li>Paper trading with TP/SL brackets</li>
-                        <li>Dual stop protection system</li>
-                    </ul>
-                </div>
-                <div class="pipeline-card options">
-                    <h4>🎯 Options Pipeline (Gateway 2)</h4>
-                    <ul>
-                        <li>Credit spread scanner (PUT spreads)</li>
-                        <li>Greeks calculation & filtering</li>
-                        <li>3-model ML risk scoring</li>
-                        <li>Spread recommendations ranking</li>
-                        <li>Paper trading with OCA groups</li>
-                        <li>Automatic protection orders</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
 
-        <!-- Pipeline Flow -->
-        <section>
-            <h2 class="section-title">Stock Pipeline Flow</h2>
-            <div class="pipeline-flow">
+            <div class="pipeline">
                 <div class="pipeline-step active">
-                    <div class="pipeline-step-title">🔌 Gateway</div>
+                    <div class="pipeline-step-title">🔌 Broker Connect</div>
                     <div class="pipeline-step-time">~2 min</div>
                 </div>
                 <span class="pipeline-arrow">→</span>
@@ -670,8 +482,8 @@
                 </div>
                 <span class="pipeline-arrow">→</span>
                 <div class="pipeline-step">
-                    <div class="pipeline-step-title">☁️ Cloud Sync</div>
-                    <div class="pipeline-step-time">~10 sec</div>
+                    <div class="pipeline-step-title">🧹 Cleanup</div>
+                    <div class="pipeline-step-time">~5 sec</div>
                 </div>
                 <span class="pipeline-arrow">→</span>
                 <div class="pipeline-step">
@@ -682,92 +494,143 @@
         </section>
 
         <!-- Key Components -->
-        <section>
+        <section class="section">
             <h2 class="section-title">Key Components</h2>
             <div class="cards-grid">
                 <div class="card">
-                    <h3 class="card-title">🔄 CI/CD Workflows</h3>
+                    <h3 class="card-title">🔄 CI/CD Pipeline</h3>
                     <div class="card-content">
-                        <p>Five automated workflows for different trading operations.</p>
+                        <p>Automated build and deployment system with self-hosted runners.</p>
                         <ul>
-                            <li><strong>schedule.yml</strong> - Daily stock scanning</li>
-                            <li><strong>paper-trading.yml</strong> - XLS simulation</li>
-                            <li><strong>stock-paper-trading.yml</strong> - IBKR stocks</li>
-                            <li><strong>options-trading.yml</strong> - Options pipeline</li>
-                            <li><strong>gateway-control.yml</strong> - Management</li>
+                            <li>GitOps workflow - infrastructure as code</li>
+                            <li>Automated container builds on push</li>
+                            <li>Scheduled job execution (cron)</li>
+                            <li>Manual trigger capability</li>
+                            <li>Job dependency management</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3 class="card-title">🐳 Docker Containers</h3>
+                    <h3 class="card-title">🐳 Container Architecture</h3>
                     <div class="card-content">
-                        <p>Seven specialized Docker containers.</p>
+                        <p>Microservices design with ephemeral workloads.</p>
                         <ul>
-                            <li>2× Broker Gateways (dual architecture)</li>
-                            <li>1× Data Collector (IV percentile)</li>
-                            <li>2× ML Scanners (stocks + options)</li>
-                            <li>2× Paper Traders (stocks + options)</li>
+                            <li>Isolated network namespaces</li>
+                            <li>On-demand broker connectivity</li>
+                            <li>Ephemeral compute containers</li>
+                            <li>Shared persistent volumes</li>
+                            <li>Resource limits (memory caps)</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3 class="card-title">🤖 ML Models (Stocks)</h3>
+                    <h3 class="card-title">🤖 ML Inference Engine</h3>
                     <div class="card-content">
-                        <p>v32d ensemble with calibrated predictions.</p>
+                        <p>Ensemble model system with thread-safe loading.</p>
                         <ul>
-                            <li>Random Forest (35% weight)</li>
-                            <li>Multi-Layer Perceptron (40% weight)</li>
-                            <li>XGBoost (25% weight)</li>
-                            <li>Veto mechanism (threshold: 0.15)</li>
+                            <li>3-model voting ensemble</li>
+                            <li>Weighted probability scoring</li>
+                            <li>Veto mechanism for risk control</li>
+                            <li>Thread-safe model loading</li>
+                            <li>Version-pinned dependencies</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3 class="card-title">🎯 ML Models (Options)</h3>
+                    <h3 class="card-title">📈 Observability Stack</h3>
                     <div class="card-content">
-                        <p>Risk scoring for credit spreads.</p>
+                        <p>Full monitoring with metrics, logs, and alerting.</p>
                         <ul>
-                            <li>XGBoost risk model</li>
-                            <li>LightGBM risk model</li>
-                            <li>Random Forest risk model</li>
-                            <li>Greeks-based filtering</li>
+                            <li>Prometheus metrics collection</li>
+                            <li>Grafana dashboards</li>
+                            <li>Loki centralized logging</li>
+                            <li>Container-level log aggregation</li>
+                            <li>Alertmanager notifications</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3 class="card-title">📈 Stock Paper Trading</h3>
+                    <h3 class="card-title">🔐 Security Design</h3>
                     <div class="card-content">
-                        <p>Automated position management.</p>
+                        <p>Secrets management and access control.</p>
                         <ul>
-                            <li>TP/SL bracket orders</li>
-                            <li>Dual stop (fixed + trailing)</li>
-                            <li>GTC order persistence</li>
-                            <li>Max hold days enforcement</li>
+                            <li>GitHub encrypted secrets</li>
+                            <li>No credentials in codebase</li>
+                            <li>Network isolation between services</li>
+                            <li>On-demand broker sessions</li>
+                            <li>Audit logging</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3 class="card-title">🎯 Options Paper Trading</h3>
+                    <h3 class="card-title">⚡ Resource Optimization</h3>
                     <div class="card-content">
-                        <p>Credit spread execution.</p>
+                        <p>Efficient resource utilization patterns.</p>
                         <ul>
-                            <li>One-Cancels-All (OCA) groups</li>
-                            <li>Take profit (50% target)</li>
-                            <li>Stop loss (200% max loss)</li>
-                            <li>Orphan position adoption</li>
+                            <li>Ephemeral containers (--rm)</li>
+                            <li>Session-based broker connection</li>
+                            <li>Memory limits per container</li>
+                            <li>Automatic cleanup on completion</li>
+                            <li>~3.5GB peak RAM usage</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Container Specs -->
-        <section>
+        <!-- Technology Stack -->
+        <section class="section">
+            <h2 class="section-title">Technology Stack</h2>
+            
+            <h3 style="color: var(--text-secondary); margin: 1.5rem 0 1rem;">Infrastructure</h3>
+            <div class="tech-stack">
+                <span class="tech-tag">Docker</span>
+                <span class="tech-tag">Docker Compose</span>
+                <span class="tech-tag">GitHub Actions</span>
+                <span class="tech-tag">Self-hosted Runner</span>
+                <span class="tech-tag">Linux (Ubuntu)</span>
+                <span class="tech-tag">VPS Hosting</span>
+            </div>
+
+            <h3 style="color: var(--text-secondary); margin: 1.5rem 0 1rem;">Monitoring</h3>
+            <div class="tech-stack">
+                <span class="tech-tag">Prometheus</span>
+                <span class="tech-tag">Grafana</span>
+                <span class="tech-tag">Loki</span>
+                <span class="tech-tag">Promtail</span>
+                <span class="tech-tag">cAdvisor</span>
+                <span class="tech-tag">Node Exporter</span>
+                <span class="tech-tag">Alertmanager</span>
+            </div>
+
+            <h3 style="color: var(--text-secondary); margin: 1.5rem 0 1rem;">Application</h3>
+            <div class="tech-stack">
+                <span class="tech-tag">Python 3.11</span>
+                <span class="tech-tag">scikit-learn</span>
+                <span class="tech-tag">XGBoost</span>
+                <span class="tech-tag">pandas</span>
+                <span class="tech-tag">NumPy</span>
+                <span class="tech-tag">joblib</span>
+            </div>
+
+            <h3 style="color: var(--text-secondary); margin: 1.5rem 0 1rem;">DevOps Practices</h3>
+            <div class="tech-stack">
+                <span class="tech-tag">GitOps</span>
+                <span class="tech-tag">Infrastructure as Code</span>
+                <span class="tech-tag">Containerization</span>
+                <span class="tech-tag">CI/CD</span>
+                <span class="tech-tag">Centralized Logging</span>
+                <span class="tech-tag">Metrics-based Monitoring</span>
+            </div>
+        </section>
+
+        <!-- Container Specifications -->
+        <section class="section">
             <h2 class="section-title">Container Specifications</h2>
             <div class="table-container">
                 <table>
@@ -781,93 +644,64 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Broker Gateway 1</td><td>External Image</td><td>~500 MB</td><td>On-demand</td><td>trading</td></tr>
-                        <tr><td>Broker Gateway 2</td><td>External Image</td><td>~500 MB</td><td>On-demand</td><td>trading</td></tr>
-                        <tr><td>Data Collector</td><td>Custom Build</td><td>~200 MB</td><td>Ephemeral</td><td>trading</td></tr>
-                        <tr><td>ML Scanner (Stocks)</td><td>Custom Build</td><td>~2 GB</td><td>Ephemeral</td><td>trading</td></tr>
-                        <tr><td>Options Scanner</td><td>Custom Build</td><td>~1 GB</td><td>Ephemeral</td><td>trading</td></tr>
-                        <tr><td>Stock Trader</td><td>Custom Build</td><td>~200 MB</td><td>Ephemeral</td><td>trading</td></tr>
-                        <tr><td>Options Trader</td><td>Custom Build</td><td>~300 MB</td><td>Ephemeral</td><td>trading</td></tr>
-                        <tr><td>Prometheus</td><td>Official</td><td>~256 MB</td><td>Persistent</td><td>monitoring</td></tr>
-                        <tr><td>Grafana</td><td>Official</td><td>~200 MB</td><td>Persistent</td><td>monitoring</td></tr>
-                        <tr><td>Loki</td><td>Official</td><td>~256 MB</td><td>Persistent</td><td>monitoring</td></tr>
+                        <tr>
+                            <td>Broker Gateway</td>
+                            <td>External Image</td>
+                            <td>~500 MB</td>
+                            <td>On-demand</td>
+                            <td>trading</td>
+                        </tr>
+                        <tr>
+                            <td>Data Collector</td>
+                            <td>Custom Build</td>
+                            <td>~200 MB</td>
+                            <td>Ephemeral</td>
+                            <td>trading</td>
+                        </tr>
+                        <tr>
+                            <td>ML Engine</td>
+                            <td>Custom Build</td>
+                            <td>~2 GB (peak)</td>
+                            <td>Ephemeral</td>
+                            <td>trading</td>
+                        </tr>
+                        <tr>
+                            <td>Prometheus</td>
+                            <td>Official Image</td>
+                            <td>~256 MB</td>
+                            <td>Persistent</td>
+                            <td>monitoring</td>
+                        </tr>
+                        <tr>
+                            <td>Grafana</td>
+                            <td>Official Image</td>
+                            <td>~200 MB</td>
+                            <td>Persistent</td>
+                            <td>monitoring</td>
+                        </tr>
+                        <tr>
+                            <td>Loki</td>
+                            <td>Official Image</td>
+                            <td>~256 MB</td>
+                            <td>Persistent</td>
+                            <td>monitoring</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- Technology Stack -->
-        <section>
-            <h2 class="section-title">Technology Stack</h2>
-            
-            <div class="tech-section">
-                <h4>Infrastructure</h4>
-                <div class="tech-stack">
-                    <span class="tech-tag">Docker</span>
-                    <span class="tech-tag">Docker Compose</span>
-                    <span class="tech-tag">GitHub Actions</span>
-                    <span class="tech-tag">Self-hosted Runner</span>
-                    <span class="tech-tag">Linux (Ubuntu 24)</span>
-                </div>
-            </div>
-
-            <div class="tech-section">
-                <h4>Monitoring</h4>
-                <div class="tech-stack">
-                    <span class="tech-tag">Prometheus</span>
-                    <span class="tech-tag">Grafana</span>
-                    <span class="tech-tag">Loki</span>
-                    <span class="tech-tag">Promtail</span>
-                    <span class="tech-tag">cAdvisor</span>
-                    <span class="tech-tag">Alertmanager</span>
-                </div>
-            </div>
-
-            <div class="tech-section">
-                <h4>Machine Learning</h4>
-                <div class="tech-stack">
-                    <span class="tech-tag">scikit-learn 1.7.0</span>
-                    <span class="tech-tag">XGBoost 3.0.2</span>
-                    <span class="tech-tag">LightGBM</span>
-                    <span class="tech-tag">NumPy</span>
-                    <span class="tech-tag">SciPy</span>
-                    <span class="tech-tag">joblib</span>
-                </div>
-            </div>
-
-            <div class="tech-section">
-                <h4>Trading</h4>
-                <div class="tech-stack">
-                    <span class="tech-tag">Python 3.11</span>
-                    <span class="tech-tag">ib_insync</span>
-                    <span class="tech-tag">pandas</span>
-                    <span class="tech-tag">TA-Lib</span>
-                    <span class="tech-tag">yfinance</span>
-                    <span class="tech-tag">PyYAML</span>
-                </div>
-            </div>
-        </section>
-
         <!-- Design Decisions -->
-        <section>
-            <h2 class="section-title">Design Decisions</h2>
+        <section class="section">
+            <h2 class="section-title">Key Design Decisions</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3 class="card-title">💡 Why Dual Gateway?</h3>
-                    <div class="card-content">
-                        <p>
-                            Separate broker gateways for stocks and options enable parallel processing
-                            without session conflicts. Independent market data subscriptions and order routing.
-                        </p>
-                    </div>
-                </div>
-
                 <div class="card">
                     <h3 class="card-title">💡 Why Ephemeral Containers?</h3>
                     <div class="card-content">
                         <p>
-                            Containers run with <code>--rm</code> flag and are destroyed after each run.
-                            Ensures clean state, prevents resource leaks, and provides consistent environment.
+                            Compute containers (data collector, ML engine) run with <code>--rm</code> flag 
+                            and are destroyed after each pipeline run. This ensures clean state, prevents 
+                            resource leaks, and allows broker connections from multiple locations.
                         </p>
                     </div>
                 </div>
@@ -876,28 +710,66 @@
                     <h3 class="card-title">💡 Why Self-hosted Runner?</h3>
                     <div class="card-content">
                         <p>
-                            GitHub-hosted runners cannot access the private broker network.
-                            Self-hosted runner enables direct Docker control and local network access.
+                            GitHub-hosted runners cannot access the private network where broker 
+                            connectivity is established. Self-hosted runner on the VPS enables 
+                            direct Docker control and local network access.
                         </p>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3 class="card-title">💡 Why OCA Orders?</h3>
+                    <h3 class="card-title">💡 Why Separate Networks?</h3>
                     <div class="card-content">
                         <p>
-                            One-Cancels-All groups ensure that when TP or SL triggers, the other 
-                            is automatically cancelled. Prevents double execution.
+                            Trading and monitoring services are isolated in separate Docker networks. 
+                            This provides security boundaries and prevents monitoring stack issues 
+                            from affecting trading operations.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">💡 Why Thread-safe Model Loading?</h3>
+                    <div class="card-content">
+                        <p>
+                            ML models (~1GB) are loaded once with mutex locks to prevent race conditions 
+                            and OOM errors when processing multiple tickers concurrently with ThreadPoolExecutor.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer>
-            <p>Built with precision · <a href="../index.html">Marcin Bury</a></p>
-            <p style="margin-top: 8px;">
-                <a href="https://github.com/burdzik2033">GitHub</a> · 
+        <!-- Integration with Live Scanner -->
+        <section class="section">
+            <h2 class="section-title">Integration: Live Scanner Frontend</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                This infrastructure serves as the backend data pipeline for the 
+                <a href="index.html" style="color: var(--accent-blue);">Live Market Scanner</a> 
+                web application. The ML signals generated here are consumed by the cloud-hosted 
+                dashboard for real-time visualization.
+            </p>
+
+            <div class="architecture-diagram">
+<pre>
+┌─────────────────────────────┐         ┌─────────────────────────────┐
+│   THIS PROJECT              │         │   LIVE SCANNER (Railway)    │
+│   (Self-hosted VPS)         │         │   (Cloud PaaS)              │
+│                             │         │                             │
+│   • Broker connectivity     │────────►│   • Web dashboard           │
+│   • ML signal generation    │  Data   │   • Real-time display       │
+│   • Monitoring & logging    │  Sync   │   • Telegram alerts         │
+│                             │         │   • User interface          │
+└─────────────────────────────┘         └─────────────────────────────┘
+         BACKEND                                  FRONTEND
+</pre>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>Built with ❤️ by <a href="index.html">Marcin Bury</a></p>
+            <p style="margin-top: 0.5rem;">
+                <a href="https://github.com/burdzik2033">GitHub</a> • 
                 <a href="https://www.linkedin.com/in/marcinbury/">LinkedIn</a>
             </p>
         </footer>
