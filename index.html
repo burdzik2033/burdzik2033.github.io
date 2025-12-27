@@ -272,7 +272,7 @@
             <div class="social-links">
                 <a href="https://github.com/burdzik2033">GitHub</a>
                 <a href="https://www.linkedin.com/in/marcinbury/">LinkedIn</a>
-                <a href="mailto:marcin.bury@gmail.com">Email</a>
+                <a href="/cdn-cgi/l/email-protection#315c504352585f1f5344434871565c50585d1f525e5c">Email</a>
             </div>
         </header>
 
@@ -294,18 +294,19 @@
                     <p class="project-description">
                         Enterprise-grade CI/CD pipeline for algorithmic trading systems. Self-hosted 
                         infrastructure with automated deployments, centralized monitoring, and 
-                        ML-powered signal generation. Processes 5,600+ tickers in under 3 minutes.
+                        ML-powered signal generation. Features dual-gateway architecture for 
+                        parallel stock and options trading. Processes 5,600+ tickers in under 3 minutes.
                     </p>
 
                     <div class="project-features">
-                        <span class="feature">GitOps workflow (Infrastructure as Code)</span>
+                        <span class="feature">Dual-gateway broker architecture</span>
                         <span class="feature">Self-hosted GitHub Actions runner</span>
-                        <span class="feature">Docker containerization</span>
+                        <span class="feature">7 specialized Docker containers</span>
                         <span class="feature">Prometheus + Grafana monitoring</span>
-                        <span class="feature">Loki centralized logging</span>
-                        <span class="feature">3-model ML ensemble inference</span>
-                        <span class="feature">Ephemeral compute containers</span>
-                        <span class="feature">Automated broker connectivity</span>
+                        <span class="feature">6 ML models (stocks + options)</span>
+                        <span class="feature">Automated paper trading (TP/SL)</span>
+                        <span class="feature">Options spread scanner</span>
+                        <span class="feature">OCA protection orders</span>
                     </div>
 
                     <div class="architecture-preview">
@@ -314,23 +315,26 @@
 │                        VERSION CONTROL (GitHub)                     │
 │  ┌──────────────────────────────────────────────────────────────┐  │
 │  │  .github/workflows/     docker/          monitoring/          │  │
-│  │  ├── build.yml          ├── data-collector/   configs        │  │
-│  │  └── schedule.yml       └── ml-engine/                        │  │
+│  │  ├── schedule.yml       ├── ml-scanner/       configs        │  │
+│  │  ├── paper-trading.yml  ├── options-scanner/                  │  │
+│  │  ├── options-trading.yml├── stock-trader/                     │  │
+│  │  └── gateway-control.yml└── options-trader/                   │  │
 │  └──────────────────────────────────────────────────────────────┘  │
 │                              │ trigger                              │
 │                              ▼                                      │
 │  ┌──────────────────────────────────────────────────────────────┐  │
 │  │            GitHub Actions (Self-hosted Runner)                │  │
-│  │   Broker Connect ──► Data Fetch ──► ML Scan ──► Cleanup       │  │
+│  │   [Gateway 1: Stocks] ──► ML Scan ──► Paper Trade            │  │
+│  │   [Gateway 2: Options] ──► Spread Scan ──► OCA Orders        │  │
 │  └──────────────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────────────┘
-                              │ SSH
+                              │
                               ▼
 ┌────────────────────────────────────────────────────────────────────┐
 │                      PRODUCTION SERVER (VPS)                        │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │
-│  │   Broker    │  │    Data     │  │  ML Engine  │   Trading       │
-│  │   Gateway   │◄─│  Collector  │  │  (Ensemble) │   Network       │
+│  │ IB Gateway 1│  │ IB Gateway 2│  │  ML Engine  │   Trading       │
+│  │  (Stocks)   │  │  (Options)  │  │  (6 models) │   Network       │
 │  └─────────────┘  └─────────────┘  └─────────────┘                 │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │
 │  │ Prometheus  │  │   Grafana   │  │    Loki     │   Monitoring    │
@@ -348,6 +352,8 @@
                         <span class="tech-tag">Python 3.11</span>
                         <span class="tech-tag">scikit-learn</span>
                         <span class="tech-tag">XGBoost</span>
+                        <span class="tech-tag">LightGBM</span>
+                        <span class="tech-tag">ib_insync</span>
                         <span class="tech-tag">Linux</span>
                     </div>
 
@@ -430,7 +436,4 @@
         <footer>
             <p>Built with ❤️ | © 2024 Marcin Bury</p>
             <p style="margin-top: 0.5rem;">Hosted on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
-        </footer>
-    </div>
-</body>
-</html>
+ 
