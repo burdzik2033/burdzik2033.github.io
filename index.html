@@ -3,547 +3,1623 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Marcin Bury - Software Developer</title>
+    <title>Marcin Bury | Platform Engineer & Algorithmic Trading Systems</title>
+    <meta name="description" content="Platform Engineer with 18+ years in enterprise infrastructure. Building algorithmic trading systems with ML, automated execution, and real-time market analysis.">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-primary: #0a0a0b;
-            --bg-secondary: rgba(255, 255, 255, 0.03);
-            --bg-tertiary: rgba(255, 255, 255, 0.06);
-            --bg-card: rgba(255, 255, 255, 0.02);
-            --text-primary: #e4e4e7;
-            --text-secondary: #a1a1aa;
-            --accent-blue: #3b82f6;
-            --accent-green: #22c55e;
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1a1a25;
+            --accent-green: #00ff88;
+            --accent-blue: #00d4ff;
             --accent-purple: #a855f7;
-            --accent-orange: #f59e0b;
+            --accent-orange: #ff6b35;
+            --accent-yellow: #fbbf24;
             --accent-red: #ef4444;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.15);
+            --text-primary: #e8e8ed;
+            --text-secondary: #8888a0;
+            --text-muted: #555566;
+            --border-color: #2a2a3a;
+            --gradient-main: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+            --gradient-warm: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow));
+            --gradient-cool: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            --gradient-value: linear-gradient(135deg, var(--accent-yellow), var(--accent-green));
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-primary);
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
-
-        /* Subtle gradient background */
-        body::before {
-            content: '';
+        
+        /* Background effects */
+        .bg-grid {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.08), transparent),
-                radial-gradient(ellipse 50% 50% at 100% 0%, rgba(168, 85, 247, 0.05), transparent);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
             pointer-events: none;
             z-index: -1;
         }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
+        
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: -1;
         }
-
-        /* Header */
-        header {
-            text-align: center;
-            padding: 5rem 0 4rem;
-        }
-
-        .avatar {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .social-links {
+        
+        .glow-orb-1 { width: 800px; height: 800px; top: -300px; right: -300px; background: var(--accent-green); }
+        .glow-orb-2 { width: 600px; height: 600px; bottom: 10%; left: -200px; background: var(--accent-blue); }
+        .glow-orb-3 { width: 500px; height: 500px; top: 50%; right: 10%; background: var(--accent-purple); opacity: 0.08; }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 1.25rem 4rem;
             display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 1.5rem;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, 0.85);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
         }
-
-        .social-links a {
+        
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
-            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 2px;
+            background: var(--accent-green);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover { color: var(--text-primary); }
+        .nav-links a:hover::after { width: 100%; }
+        
+        .social-links { display: flex; gap: 1rem; }
+        .social-links a {
+            color: var(--text-secondary);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .social-links a:hover { color: var(--accent-green); transform: translateY(-2px); }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 4rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .hero-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.1s forwards;
+        }
+        
+        .hero h1 span {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.3s forwards;
+            flex-wrap: wrap;
+        }
+        
+        .stat { text-align: left; }
+        
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.25rem;
+            font-weight: 700;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
             border-radius: 8px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            transition: all 0.2s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--text-primary);
-            border-color: var(--border-hover);
-            background: var(--bg-tertiary);
-            transform: translateY(-2px);
-        }
-
-        /* Section */
-        .section-title {
-            font-size: 1.5rem;
             font-weight: 600;
-            margin: 4rem 0 2rem;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-main);
+            color: var(--bg-primary);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--accent-green);
+            background: rgba(0, 255, 136, 0.1);
+        }
+        
+        /* Sections */
+        section {
+            padding: 6rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header { margin-bottom: 4rem; }
+        
+        .section-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-green);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title { font-size: 2.5rem; font-weight: 700; }
+        
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-top: 1rem;
+        }
+        
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        
+        .about-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+        
+        .about-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+        
+        .about-highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .highlight-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .highlight-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+        
+        .highlight-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+        
+        .experience-timeline { position: relative; }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+            border-left: 2px solid var(--border-color);
+        }
+        
+        .timeline-item:last-child { border-left: 2px solid transparent; }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px; top: 0;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--accent-green);
+        }
+        
+        .timeline-company { font-weight: 600; font-size: 1.1rem; color: var(--text-primary); }
+        .timeline-role { color: var(--accent-blue); font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .timeline-period { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-muted); }
+        
+        /* Strategies Section */
+        .strategies-grid { display: grid; gap: 3rem; }
+        
+        .strategy-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .strategy-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: var(--gradient-main);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .strategy-card:hover {
+            border-color: rgba(0, 255, 136, 0.3);
+            transform: translateY(-4px);
+        }
+        
+        .strategy-card:hover::before { transform: scaleX(1); }
+        
+        .strategy-card.orange::before { background: var(--gradient-warm); }
+        .strategy-card.purple::before { background: var(--gradient-cool); }
+        .strategy-card.yellow::before { background: var(--gradient-value); }
+        
+        .strategy-header {
             display: flex;
             align-items: center;
             gap: 1rem;
-            letter-spacing: -0.01em;
+            margin-bottom: 1.25rem;
         }
-
-        .section-title::after {
+        
+        .strategy-icon {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+        }
+        
+        .strategy-icon.green { background: rgba(0, 255, 136, 0.15); }
+        .strategy-icon.orange { background: rgba(255, 107, 53, 0.15); }
+        .strategy-icon.purple { background: rgba(168, 85, 247, 0.15); }
+        .strategy-icon.yellow { background: rgba(251, 191, 36, 0.15); }
+        
+        .strategy-title { font-size: 1.4rem; font-weight: 600; }
+        
+        .strategy-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-left: auto;
+        }
+        
+        .status-live { background: rgba(0, 255, 136, 0.15); color: var(--accent-green); }
+        .status-live::before {
             content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, var(--border-color), transparent);
+            width: 6px; height: 6px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
         }
-
-        /* Project Cards */
-        .projects-grid {
+        
+        .status-paper { background: rgba(251, 191, 36, 0.15); color: var(--accent-yellow); }
+        
+        .strategy-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+        }
+        
+        .strategy-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+        
+        .feature-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            padding: 0.35rem 0.65rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+        }
+        
+        .strategy-links { display: flex; gap: 1rem; margin-top: auto; }
+        
+        .strategy-link {
+            font-size: 0.85rem;
+            color: var(--accent-green);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.3s ease;
+        }
+        
+        .strategy-link:hover { color: var(--text-primary); }
+        
+        .strategy-diagram {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
         }
-
+        
+        .diagram-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+        
+        .diagram-content {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            line-height: 1.55;
+            color: var(--text-secondary);
+            white-space: pre;
+            overflow-x: auto;
+            flex: 1;
+        }
+        
+        .diagram-content .green { color: var(--accent-green); }
+        .diagram-content .blue { color: var(--accent-blue); }
+        .diagram-content .purple { color: var(--accent-purple); }
+        .diagram-content .orange { color: var(--accent-orange); }
+        .diagram-content .yellow { color: var(--accent-yellow); }
+        
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        
         .project-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.3s ease;
+            padding: 1.75rem;
+            transition: all 0.4s ease;
             position: relative;
-            backdrop-filter: blur(10px);
+            overflow: hidden;
         }
-
+        
         .project-card::before {
             content: '';
             position: absolute;
-            inset: 0;
-            border-radius: 16px;
-            padding: 1px;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), transparent, rgba(168, 85, 247, 0.1));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-main);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
         }
-
+        
         .project-card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(0, 255, 136, 0.3);
             transform: translateY(-4px);
-            border-color: var(--border-hover);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
-
-        .project-card:hover::before {
-            opacity: 1;
-        }
-
+        
+        .project-card:hover::before { transform: scaleX(1); }
+        
         .project-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
         }
-
-        .project-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            letter-spacing: -0.01em;
-        }
-
-        .project-badges {
+        
+        .project-icon {
+            width: 44px; height: 44px;
+            border-radius: 10px;
             display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
         }
-
-        .badge {
-            padding: 0.35rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.7rem;
+        
+        .project-icon.green { background: rgba(0, 255, 136, 0.15); }
+        .project-icon.blue { background: rgba(0, 212, 255, 0.15); }
+        .project-icon.purple { background: rgba(168, 85, 247, 0.15); }
+        .project-icon.orange { background: rgba(255, 107, 53, 0.15); }
+        .project-icon.yellow { background: rgba(251, 191, 36, 0.15); }
+        
+        .project-status {
+            font-size: 0.65rem;
             font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
             text-transform: uppercase;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.05em;
         }
-
-        .badge-live {
-            background: rgba(34, 197, 94, 0.15);
-            color: var(--accent-green);
-        }
-
-        .badge-private {
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--accent-red);
-        }
-
-        .badge-new {
-            background: rgba(168, 85, 247, 0.15);
-            color: var(--accent-purple);
-        }
-
+        
+        .project-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; }
+        
         .project-description {
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
+            font-size: 0.88rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
         }
-
-        .project-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0.6rem;
-            margin-bottom: 1.5rem;
+        
+        .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        
+        .tech-badge {
+            font-size: 0.68rem;
+            font-weight: 500;
+            padding: 0.35rem 0.6rem;
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
         }
-
-        .feature {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.4rem 0;
-        }
-
-        .feature::before {
-            content: "✓";
-            color: var(--accent-green);
-            font-weight: 600;
-            font-size: 0.8rem;
-        }
-
-        /* Architecture Preview */
-        .architecture-preview {
-            background: var(--bg-tertiary);
+        
+        /* Architecture Section */
+        .architecture-container {
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.25rem;
+            border-radius: 20px;
+            padding: 2.5rem;
             overflow-x: auto;
-            margin: 1.5rem 0;
         }
-
-        .architecture-preview pre {
+        
+        .architecture-pre {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.68rem;
-            line-height: 1.4;
+            line-height: 1.5;
             color: var(--text-secondary);
-            margin: 0;
+            white-space: pre;
         }
-
+        
+        .architecture-pre .green { color: var(--accent-green); }
+        .architecture-pre .blue { color: var(--accent-blue); }
+        .architecture-pre .purple { color: var(--accent-purple); }
+        .architecture-pre .orange { color: var(--accent-orange); }
+        
         /* Tech Stack */
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 1.5rem 0;
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
         }
-
-        .tech-tag {
-            background: var(--bg-tertiary);
-            color: var(--text-secondary);
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
+        
+        .tech-category {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .tech-category-title {
             font-size: 0.75rem;
-            font-weight: 500;
-            border: 1px solid var(--border-color);
-            transition: all 0.2s ease;
-        }
-
-        .tech-tag:hover {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-        }
-
-        /* Project Links */
-        .project-links {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.65rem 1.25rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.85rem;
             font-weight: 600;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
         }
-
-        .btn-primary {
-            background: var(--accent-blue);
-            color: white;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
-        }
-
-        .btn-secondary {
-            background: var(--bg-tertiary);
+        
+        .tech-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        
+        .tech-item {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            padding: 0.4rem 0.65rem;
+            background: var(--bg-secondary);
+            border-radius: 6px;
             color: var(--text-primary);
+        }
+        
+        /* Certifications */
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .cert-card {
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
-
-        .btn-secondary:hover {
-            border-color: var(--border-hover);
-            background: rgba(255, 255, 255, 0.08);
+        
+        .cert-icon {
+            width: 48px; height: 48px;
+            border-radius: 10px;
+            background: rgba(0, 255, 136, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
         }
-
+        
+        .cert-info h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .cert-info p { font-size: 0.8rem; color: var(--text-muted); }
+        
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .contact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .contact-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-4px);
+        }
+        
+        .contact-icon {
+            width: 56px; height: 56px;
+            border-radius: 14px;
+            background: rgba(0, 255, 136, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        
+        .contact-icon svg { width: 24px; height: 24px; color: var(--accent-green); }
+        .contact-card h4 { font-size: 1rem; margin-bottom: 0.5rem; }
+        .contact-card p { font-size: 0.85rem; color: var(--text-secondary); }
+        
         /* Footer */
         footer {
+            padding: 4rem;
             text-align: center;
-            padding: 3rem 0 2rem;
-            margin-top: 5rem;
             border-top: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: 0.9rem;
         }
-
-        footer a {
-            color: var(--accent-blue);
-            text-decoration: none;
+        
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease; }
+        .footer-links a:hover { color: var(--accent-green); }
+        .footer-copy { color: var(--text-muted); font-size: 0.85rem; }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        footer a:hover {
-            text-decoration: underline;
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
-
+        
         /* Responsive */
+        @media (max-width: 1024px) {
+            .strategy-card, .about-grid { grid-template-columns: 1fr; }
+        }
+        
         @media (max-width: 768px) {
-            header {
-                padding: 3rem 0 2rem;
-            }
-
-            header h1 {
-                font-size: 2rem;
-            }
-
-            .project-card {
-                padding: 1.5rem;
-            }
-
-            .project-title {
-                font-size: 1.1rem;
-            }
-
-            .architecture-preview pre {
-                font-size: 0.55rem;
-            }
-
-            .social-links {
-                flex-wrap: wrap;
-            }
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { display: none; }
+            .hero, section { padding: 4rem 1.5rem; }
+            .hero-stats { gap: 2rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .hero-cta { flex-direction: column; }
+            .about-highlights { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="avatar">👨‍💻</div>
-            <h1>Marcin Bury</h1>
-            <div class="social-links">
-                <a href="https://github.com/burdzik2033">GitHub</a>
-                <a href="https://www.linkedin.com/in/marcinbury/">LinkedIn</a>
-                <a href="mailto:marcin.bury@gmail.com">Email</a>
+    <div class="bg-grid"></div>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+    
+    <nav>
+        <div class="logo">MB_</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#strategies">Strategies</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="social-links">
+            <a href="https://github.com/burdzik2033" target="_blank" aria-label="GitHub">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/marcinbury/" target="_blank" aria-label="LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <a href="mailto:marcin.bury@gmail.com" aria-label="Email">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Hero -->
+    <header class="hero">
+        <div class="hero-tag">// PLATFORM ENGINEER & ALGORITHMIC TRADER</div>
+        <h1>Building <span>Enterprise-Grade</span><br>Trading Infrastructure</h1>
+        <p class="hero-description">
+            Platform Engineer with 18+ years in enterprise infrastructure at UBS, Credit Suisse, and Crédit Agricole. 
+            Building algorithmic trading systems combining fundamental analysis, ML-powered signals, 
+            and automated execution across global markets.
+        </p>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-value">18+</div>
+                <div class="stat-label">Years Experience</div>
             </div>
-        </header>
-
-        <main>
-            <h2 class="section-title">🚀 Featured Projects</h2>
-
-            <div class="projects-grid">
-                <!-- Project 1: Trading Infrastructure (NEW) -->
-                <article class="project-card">
-                    <div class="project-header">
-                        <h3 class="project-title">🏗️ Automated Trading Infrastructure</h3>
-                        <div class="project-badges">
-                            <span class="badge badge-live">● Production</span>
-                            <span class="badge badge-private">Private Repo</span>
-                            <span class="badge badge-new">NEW</span>
-                        </div>
-                    </div>
-
-                    <p class="project-description">
-                        Enterprise-grade CI/CD pipeline for algorithmic trading systems. Self-hosted 
-                        infrastructure with automated deployments, centralized monitoring, and 
-                        ML-powered signal generation. Processes 5,600+ tickers in under 3 minutes.
-                    </p>
-
-                    <div class="project-features">
-                        <span class="feature">GitOps workflow (Infrastructure as Code)</span>
-                        <span class="feature">Self-hosted GitHub Actions runner</span>
-                        <span class="feature">Docker containerization</span>
-                        <span class="feature">Prometheus + Grafana monitoring</span>
-                        <span class="feature">Loki centralized logging</span>
-                        <span class="feature">3-model ML ensemble inference</span>
-                        <span class="feature">Ephemeral compute containers</span>
-                        <span class="feature">Automated broker connectivity</span>
-                    </div>
-
-                    <div class="architecture-preview">
-<pre>
-┌────────────────────────────────────────────────────────────────────┐
-│                        VERSION CONTROL (GitHub)                     │
-│  ┌──────────────────────────────────────────────────────────────┐  │
-│  │  .github/workflows/     docker/          monitoring/          │  │
-│  │  ├── build.yml          ├── data-collector/   configs        │  │
-│  │  └── schedule.yml       └── ml-engine/                        │  │
-│  └──────────────────────────────────────────────────────────────┘  │
-│                              │ trigger                              │
-│                              ▼                                      │
-│  ┌──────────────────────────────────────────────────────────────┐  │
-│  │            GitHub Actions (Self-hosted Runner)                │  │
-│  │   Broker Connect ──► Data Fetch ──► ML Scan ──► Cleanup       │  │
-│  └──────────────────────────────────────────────────────────────┘  │
-└────────────────────────────────────────────────────────────────────┘
-                              │ SSH
-                              ▼
-┌────────────────────────────────────────────────────────────────────┐
-│                      PRODUCTION SERVER (VPS)                        │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │
-│  │   Broker    │  │    Data     │  │  ML Engine  │   Trading       │
-│  │   Gateway   │◄─│  Collector  │  │  (Ensemble) │   Network       │
-│  └─────────────┘  └─────────────┘  └─────────────┘                 │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │
-│  │ Prometheus  │  │   Grafana   │  │    Loki     │   Monitoring    │
-│  └─────────────┘  └─────────────┘  └─────────────┘   Network       │
-└────────────────────────────────────────────────────────────────────┘
-</pre>
-                    </div>
-
-                    <div class="tech-stack">
-                        <span class="tech-tag">Docker</span>
-                        <span class="tech-tag">GitHub Actions</span>
-                        <span class="tech-tag">Prometheus</span>
-                        <span class="tech-tag">Grafana</span>
-                        <span class="tech-tag">Loki</span>
-                        <span class="tech-tag">Python 3.11</span>
-                        <span class="tech-tag">scikit-learn</span>
-                        <span class="tech-tag">XGBoost</span>
-                        <span class="tech-tag">Linux</span>
-                    </div>
-
-                    <div class="project-links">
-                        <a href="projects/trading-infrastructure.html" class="btn btn-primary">📖 View Architecture</a>
-                    </div>
-                </article>
-
-                <!-- Project 2: Live Market Scanner -->
-                <article class="project-card">
-                    <div class="project-header">
-                        <h3 class="project-title">📊 Live Market Scanner</h3>
-                        <div class="project-badges">
-                            <span class="badge badge-live">● Live</span>
-                            <span class="badge badge-private">Private Repo</span>
-                        </div>
-                    </div>
-
-                    <p class="project-description">
-                        Real-time S&P 500 market analysis system combining machine learning predictions
-                        with technical indicators and market breadth analysis. Cloud-hosted dashboard
-                        with automated signal detection and Telegram notifications.
-                    </p>
-
-                    <div class="project-features">
-                        <span class="feature">ML Jury System (Random Forest, XGBoost, MLP)</span>
-                        <span class="feature">Real-time market regime detection</span>
-                        <span class="feature">Technical signal detection (RSI, BB, SMA)</span>
-                        <span class="feature">S&P 500 breadth analysis</span>
-                        <span class="feature">Automated Telegram alerts</span>
-                        <span class="feature">Sell signal warning system</span>
-                        <span class="feature">Trading day calendar (NYSE holidays)</span>
-                        <span class="feature">Proxy rotation for API reliability</span>
-                    </div>
-
-                    <div class="architecture-preview">
-<pre>
-┌─────────────────────────────────────────────────────────────┐
-│                    RAILWAY.APP CLOUD                         │
-│  ┌───────────┐    ┌────────────┐    ┌──────────────────┐    │
-│  │  Flask    │◄──►│ Background │◄──►│  Data Storage    │    │
-│  │  Web UI   │    │   Worker   │    │  /app/data/      │    │
-│  └───────────┘    └────────────┘    └──────────────────┘    │
-│        │                │                                    │
-│        ▼                ▼                                    │
-│  ┌─────────────────────────────────────────────────────┐    │
-│  │  Yahoo Finance API ◄── Webshare Proxy (rotating)    │    │
-│  └─────────────────────────────────────────────────────┘    │
-└─────────────────────────────────────────────────────────────┘
-                           │
-┌─────────────────────────────────────────────────────────────┐
-│                    LOCAL COMPONENTS                          │
-│  ┌─────────────────┐         ┌─────────────────────────┐    │
-│  │  ML Jury System │────────►│  Breadth Calculator     │    │
-│  │  (IB Scanner)   │         │  (S&P 500 Analysis)     │    │
-│  └─────────────────┘         └─────────────────────────┘    │
-└─────────────────────────────────────────────────────────────┘
-</pre>
-                    </div>
-
-                    <div class="tech-stack">
-                        <span class="tech-tag">Python 3.11</span>
-                        <span class="tech-tag">Flask</span>
-                        <span class="tech-tag">scikit-learn</span>
-                        <span class="tech-tag">XGBoost</span>
-                        <span class="tech-tag">pandas</span>
-                        <span class="tech-tag">Railway.app</span>
-                        <span class="tech-tag">Yahoo Finance API</span>
-                        <span class="tech-tag">Vanilla JS</span>
-                    </div>
-
-                    <div class="project-links">
-                        <a href="https://contra-scanner.up.railway.app/" class="btn btn-primary" target="_blank">🚀 Live App</a>
-                        <a href="projects/market-scanner.html" class="btn btn-secondary">📖 View Details</a>
-                    </div>
-                </article>
+            <div class="stat">
+                <div class="stat-value">S&P 500</div>
+                <div class="stat-label">Fundamental Analysis</div>
             </div>
-        </main>
+            <div class="stat">
+                <div class="stat-value">9</div>
+                <div class="stat-label">Global Markets</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">4</div>
+                <div class="stat-label">Trading Strategies</div>
+            </div>
+        </div>
+        <div class="hero-cta">
+            <a href="#strategies" class="btn btn-primary">
+                Explore Strategies
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+            <a href="https://contra-scanner.up.railway.app/" target="_blank" class="btn btn-secondary">Contra Scanner →</a>
+            <a href="https://garp.up.railway.app/" target="_blank" class="btn btn-secondary">GARP Ranking →</a>
+        </div>
+    </header>
+    
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-header">
+            <div class="section-tag">// About Me</div>
+            <h2 class="section-title">From Database Platforms to Trading Systems</h2>
+        </div>
+        
+        <div class="about-grid">
+            <div class="about-content">
+                <h3>Enterprise Roots, Trading Ambitions</h3>
+                <p>
+                    I've spent nearly two decades designing and operating mission-critical database platforms 
+                    for Tier-1 investment banks. Managing 200+ Oracle instances, migrating 260+ databases, 
+                    and maintaining 99.99% availability taught me what "production-grade" really means.
+                </p>
+                <p>
+                    Now I'm applying that same engineering rigor to algorithmic trading. Building systems 
+                    that analyze S&P 500 fundamentals, scan 9 global markets for momentum signals, 
+                    and execute ML-validated trades with full automation.
+                </p>
+                <p>
+                    Currently at <strong>UBS</strong> driving Cloud Automation and DevOps transformation, 
+                    while building my own trading infrastructure as a personal project.
+                </p>
+                
+                <div class="about-highlights">
+                    <div class="highlight-item">
+                        <div class="highlight-value">200+</div>
+                        <div class="highlight-label">Oracle Instances Managed</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-value">99.99%</div>
+                        <div class="highlight-label">Availability Maintained</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-value">260+</div>
+                        <div class="highlight-label">Database Migrations</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-value">OCP</div>
+                        <div class="highlight-label">Oracle Certified Pro</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="experience-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-role">Platform Engineer – Cloud & Automation</div>
+                    <div class="timeline-company">UBS</div>
+                    <div class="timeline-period">Nov 2023 – Present</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-role">Senior Platform Engineer – DHP</div>
+                    <div class="timeline-company">Credit Suisse</div>
+                    <div class="timeline-period">Apr 2014 – Nov 2023</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-role">Oracle Database Administrator</div>
+                    <div class="timeline-company">Credit Suisse</div>
+                    <div class="timeline-period">Oct 2012 – Mar 2014</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-role">Specialist Oracle DBA</div>
+                    <div class="timeline-company">Crédit Agricole</div>
+                    <div class="timeline-period">Aug 2007 – Sep 2012</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Trading Strategies -->
+    <section id="strategies">
+        <div class="section-header">
+            <div class="section-tag">// Trading Strategies</div>
+            <h2 class="section-title">Systematic Approaches to Market Analysis</h2>
+            <p class="section-subtitle">
+                Four complementary strategies covering fundamentals, momentum, ML signals, and options.
+            </p>
+        </div>
+        
+        <div class="strategies-grid">
+            <!-- GARP Strategy -->
+            <article class="strategy-card yellow">
+                <div class="strategy-content">
+                    <div class="strategy-header">
+                        <div class="strategy-icon yellow">📊</div>
+                        <div>
+                            <h3 class="strategy-title">GARP Fundamental Ranking</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Growth at Reasonable Price</p>
+                        </div>
+                        <span class="strategy-status status-live">Live</span>
+                    </div>
+                    
+                    <p class="strategy-description">
+                        Comprehensive fundamental analysis of S&P 500 using GARP methodology. 
+                        Scores companies across 4 categories: Growth (revenue, EPS, CFO), 
+                        Fundamentals (debt, coverage), Value (upside, price targets), and Must-Haves.
+                        Includes Intelligence layer: insider trading, earnings consistency, analyst sentiment, 
+                        news monitoring, and SEC filings analysis.
+                    </p>
+                    
+                    <div class="strategy-features">
+                        <span class="feature-tag">S&P 500 Coverage</span>
+                        <span class="feature-tag">17 Fundamental Metrics</span>
+                        <span class="feature-tag">Piotroski F-Score</span>
+                        <span class="feature-tag">Insider Trading Monitor</span>
+                        <span class="feature-tag">SEC Filings Analysis</span>
+                        <span class="feature-tag">News Sentiment</span>
+                        <span class="feature-tag">Historical Snapshots</span>
+                    </div>
+                    
+                    <div class="strategy-links">
+                        <a href="https://garp.up.railway.app/" target="_blank" class="strategy-link">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                            Live Dashboard
+                        </a>
+                        <a href="projects/garp.html" class="strategy-link">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            Full Details
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="strategy-diagram">
+                    <div class="diagram-title">Scoring Categories (102 pts max)</div>
+                    <div class="diagram-content">
+<span class="yellow">┌─────────────────────────────────────┐</span>
+<span class="yellow">│</span>     <span class="green">GROWTH (65 pts)</span>                 <span class="yellow">│</span>
+<span class="yellow">│</span>  Revenue 5Y Growth    │  5 pts     <span class="yellow">│</span>
+<span class="yellow">│</span>  Revenue 2Y Forecast  │ 10 pts     <span class="yellow">│</span>
+<span class="yellow">│</span>  EPS 5Y Growth        │  5 pts     <span class="yellow">│</span>
+<span class="yellow">│</span>  EPS 2Y/5Y Forecast   │ 14 pts     <span class="yellow">│</span>
+<span class="yellow">│</span>  EBITDA Margin        │  5 pts     <span class="yellow">│</span>
+<span class="yellow">│</span>  ROIC / ROA           │ 10 pts     <span class="yellow">│</span>
+<span class="yellow">│</span>  CFO 5Y + 2Y Est      │ 16 pts     <span class="yellow">│</span>
+<span class="yellow">├─────────────────────────────────────┤</span>
+<span class="yellow">│</span>     <span class="blue">FUNDAMENTALS (4 pts)</span>           <span class="yellow">│</span>
+<span class="yellow">│</span>  Ohlson Bankruptcy Prob           <span class="yellow">│</span>
+<span class="yellow">│</span>  Debt to Assets Ratio             <span class="yellow">│</span>
+<span class="yellow">│</span>  Interest Coverage                <span class="yellow">│</span>
+<span class="yellow">│</span>  CFO to Debt Ratio                <span class="yellow">│</span>
+<span class="yellow">├─────────────────────────────────────┤</span>
+<span class="yellow">│</span>     <span class="purple">VALUE (30 pts)</span>                 <span class="yellow">│</span>
+<span class="yellow">│</span>  Upside Potential     │ 25 pts     <span class="yellow">│</span>
+<span class="yellow">│</span>  Price Target Decline │  5 pts     <span class="yellow">│</span>
+<span class="yellow">├─────────────────────────────────────┤</span>
+<span class="yellow">│</span>     <span class="orange">MUST HAVE (3 pts)</span>              <span class="yellow">│</span>
+<span class="yellow">│</span>  Price > $10 │ EPS Estimates │ CFO<span class="yellow">│</span>
+<span class="yellow">└─────────────────────────────────────┘</span>
 
-        <footer>
-            <p>Built with ❤️ | © 2024 Marcin Bury</p>
-            <p style="margin-top: 0.5rem;">Hosted on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
-        </footer>
-    </div>
+<span class="green">INTELLIGENCE LAYER:</span>
+  👤 Insider Trading (buys/sells)
+  💰 Earnings Consistency
+  📊 Analyst Price Targets
+  📰 News Volume + Keywords
+  📋 SEC Filings (8-K, 10-K)
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Contra Scanner Strategy -->
+            <article class="strategy-card orange">
+                <div class="strategy-content">
+                    <div class="strategy-header">
+                        <div class="strategy-icon orange">📈</div>
+                        <div>
+                            <h3 class="strategy-title">Contra Scanner</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Contrarian Stock Selection</p>
+                        </div>
+                        <span class="strategy-status status-live">Live</span>
+                    </div>
+                    
+                    <p class="strategy-description">
+                        Contrarian stock selection strategy adapted from options trading principles. 
+                        Identifies oversold conditions using VIX regime analysis, RSI extremes, 
+                        Bollinger Band breakouts, and distance from SMA-200.
+                        The ML Jury System (3-model ensemble) validates signals before execution.
+                    </p>
+                    
+                    <div class="strategy-features">
+                        <span class="feature-tag">VIX Percentile Analysis</span>
+                        <span class="feature-tag">RSI Extremes</span>
+                        <span class="feature-tag">Bollinger Bands</span>
+                        <span class="feature-tag">SMA-200 Distance</span>
+                        <span class="feature-tag">ML Jury Validation</span>
+                        <span class="feature-tag">Real-time Dashboard</span>
+                    </div>
+                    
+                    <div class="strategy-links">
+                        <a href="https://contra-scanner.up.railway.app/" target="_blank" class="strategy-link">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                            Live Dashboard
+                        </a>
+                        <a href="projects/contra.html" class="strategy-link">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            Full Details
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="strategy-diagram">
+                    <div class="diagram-title">Signal Flow</div>
+                    <div class="diagram-content">
+<span class="orange">┌─────────────────────────────────────┐</span>
+<span class="orange">│</span>        <span class="blue">MARKET REGIME CHECK</span>          <span class="orange">│</span>
+<span class="orange">│</span>   VIX > 20? │ VIX Percentile > 70?  <span class="orange">│</span>
+<span class="orange">└──────────────┬──────────────────────┘</span>
+               │ <span class="green">✓ Risk-On Environment</span>
+               ▼
+<span class="orange">┌─────────────────────────────────────┐</span>
+<span class="orange">│</span>      <span class="blue">TECHNICAL SCREENING</span>          <span class="orange">│</span>
+<span class="orange">│</span>  • RSI(14) < 30                    <span class="orange">│</span>
+<span class="orange">│</span>  • Price < Lower Bollinger         <span class="orange">│</span>
+<span class="orange">│</span>  • Distance from SMA-200 > -8%     <span class="orange">│</span>
+<span class="orange">└──────────────┬──────────────────────┘</span>
+               │
+               ▼
+<span class="purple">┌─────────────────────────────────────┐</span>
+<span class="purple">│</span>        <span class="green">ML JURY VALIDATION</span>         <span class="purple">│</span>
+<span class="purple">│</span>  RF(35%) + MLP(40%) + XGB(25%)    <span class="purple">│</span>
+<span class="purple">│</span>  Weighted Score > 0.75 = ACCEPT   <span class="purple">│</span>
+<span class="purple">│</span>  Any Model < 0.15 = VETO          <span class="purple">│</span>
+<span class="purple">└──────────────┬──────────────────────┘</span>
+               │
+               ▼
+<span class="green">┌─────────────────────────────────────┐</span>
+<span class="green">│</span>         <span class="green">TRADE EXECUTION</span>           <span class="green">│</span>
+<span class="green">│</span>  Dual Stop: Fixed SL + Trailing   <span class="green">│</span>
+<span class="green">└─────────────────────────────────────┘</span>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Pearls Scanner Strategy -->
+            <article class="strategy-card">
+                <div class="strategy-content">
+                    <div class="strategy-header">
+                        <div class="strategy-icon green">💎</div>
+                        <div>
+                            <h3 class="strategy-title">Pearls Scanner (AEM Clenow)</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Multi-Market Momentum</p>
+                        </div>
+                        <span class="strategy-status status-live">Live API</span>
+                    </div>
+                    
+                    <p class="strategy-description">
+                        Multi-market momentum scanner based on Andreas Clenow's methodology. 
+                        Calculates exponential regression momentum (Slope × R²) across 9 global markets.
+                        Two-stage selection: first TOP N by momentum score, then Pearl Score 
+                        for multi-criteria quality assessment.
+                    </p>
+                    
+                    <div class="strategy-features">
+                        <span class="feature-tag">9 Global Markets</span>
+                        <span class="feature-tag">Exponential Regression</span>
+                        <span class="feature-tag">Momentum (Slope × R²)</span>
+                        <span class="feature-tag">Pearl Score Quality</span>
+                        <span class="feature-tag">Gap Filter</span>
+                        <span class="feature-tag">REST API</span>
+                    </div>
+                    
+                    <div class="strategy-links">
+                        <a href="projects/pearls.html" class="strategy-link">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            Full Details
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="strategy-diagram">
+                    <div class="diagram-title">Markets & Methodology</div>
+                    <div class="diagram-content">
+<span class="green">┌─────────────────────────────────────┐</span>
+<span class="green">│</span>         <span class="blue">GLOBAL MARKETS</span>             <span class="green">│</span>
+<span class="green">├─────────────────────────────────────┤</span>
+<span class="green">│</span>  🇺🇸 USA    │  🇬🇧 UK     │  🇯🇵 JP    <span class="green">│</span>
+<span class="green">│</span>  🇫🇷 FR     │  🇪🇸 ES     │  🇸🇪 SE    <span class="green">│</span>
+<span class="green">│</span>  🇩🇪 DE     │  🇵🇱 PL     │  🇮🇹 IT    <span class="green">│</span>
+<span class="green">└─────────────────────────────────────┘</span>
+
+<span class="purple">MOMENTUM CALCULATION:</span>
+┌─────────────────────────────────────┐
+│  <span class="blue">slope_250</span> = exp_regression(250d)   │
+│  <span class="blue">slope_125</span> = exp_regression(125d)   │
+│                                     │
+│  <span class="green">momentum</span> = slope × R²              │
+│  <span class="green">final</span> = avg(momentum_250, _125)   │
+└─────────────────────────────────────┘
+
+<span class="orange">TWO-STAGE SELECTION:</span>
+  1. TOP N by Momentum Score
+  2. Pearl Score (quality filter)
+  3. Gap Filter (remove outliers)
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Options Strategy -->
+            <article class="strategy-card purple">
+                <div class="strategy-content">
+                    <div class="strategy-header">
+                        <div class="strategy-icon purple">📉</div>
+                        <div>
+                            <h3 class="strategy-title">Credit PUT Spreads</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Options Strategy</p>
+                        </div>
+                        <span class="strategy-status status-paper">Paper</span>
+                    </div>
+                    
+                    <p class="strategy-description">
+                        Systematic credit PUT spread strategy using ML-powered selection. 
+                        Scans 5,600+ US options tickers for high-probability setups with optimal 
+                        risk/reward. Greeks calculation, IV percentile filtering, earnings avoidance.
+                        Automated execution with position limits and duplicate protection.
+                    </p>
+                    
+                    <div class="strategy-features">
+                        <span class="feature-tag">5,600+ Tickers</span>
+                        <span class="feature-tag">Credit PUT Spreads</span>
+                        <span class="feature-tag">30-70 DTE</span>
+                        <span class="feature-tag">Delta 0.05-0.30</span>
+                        <span class="feature-tag">IV Percentile > 70</span>
+                        <span class="feature-tag">Earnings Filter</span>
+                    </div>
+                    
+                    <div class="strategy-links">
+                        <a href="projects/options.html" class="strategy-link">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            Full Details
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="strategy-diagram">
+                    <div class="diagram-title">Spread Selection</div>
+                    <div class="diagram-content">
+<span class="purple">┌─────────────────────────────────────┐</span>
+<span class="purple">│</span>       <span class="blue">OPTIONS UNIVERSE</span>            <span class="purple">│</span>
+<span class="purple">│</span>      5,600+ US Tickers            <span class="purple">│</span>
+<span class="purple">└──────────────┬──────────────────────┘</span>
+               │
+               ▼
+<span class="purple">┌─────────────────────────────────────┐</span>
+<span class="purple">│</span>      <span class="blue">LIQUIDITY FILTER</span>            <span class="purple">│</span>
+<span class="purple">│</span>  • Avg Volume 90d > threshold     <span class="purple">│</span>
+<span class="purple">│</span>  • Option bid/ask spread          <span class="purple">│</span>
+<span class="purple">└──────────────┬──────────────────────┘</span>
+               │
+               ▼
+<span class="green">┌─────────────────────────────────────┐</span>
+<span class="green">│</span>      <span class="blue">SPREAD PARAMETERS</span>           <span class="green">│</span>
+<span class="green">│</span>  • DTE: 30-70 days               <span class="green">│</span>
+<span class="green">│</span>  • Width: $5-$20                 <span class="green">│</span>
+<span class="green">│</span>  • Short Delta: 0.05-0.30        <span class="green">│</span>
+<span class="green">│</span>  • Min Credit: $0.30             <span class="green">│</span>
+<span class="green">│</span>  • IV Percentile: > 70           <span class="green">│</span>
+<span class="green">└──────────────┬──────────────────────┘</span>
+               │
+               ▼
+<span class="orange">┌─────────────────────────────────────┐</span>
+<span class="orange">│</span>        <span class="green">ML RISK MODEL</span>             <span class="orange">│</span>
+<span class="orange">│</span>  3-model ensemble validation      <span class="orange">│</span>
+<span class="orange">└─────────────────────────────────────┘</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+    
+    <!-- System Components -->
+    <section id="projects">
+        <div class="section-header">
+            <div class="section-tag">// System Components</div>
+            <h2 class="section-title">Trading Infrastructure</h2>
+            <p class="section-subtitle">
+                Microservices architecture with Docker containers, automated orchestration, and full observability.
+            </p>
+        </div>
+        
+        <div class="projects-grid">
+            <!-- GARP Analyzer -->
+            <article class="project-card">
+                <div class="project-header">
+                    <div class="project-icon yellow">📊</div>
+                    <span class="project-status status-live">Live</span>
+                </div>
+                <h3 class="project-title">GARP Fundamental Analyzer</h3>
+                <p class="project-description">
+                    Full S&P 500 analysis with 17 metrics across 4 categories. 
+                    FMP, Finnhub, Alpha Vantage APIs with intelligent fallbacks.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">FastAPI</span>
+                    <span class="tech-badge">FMP API</span>
+                    <span class="tech-badge">Railway</span>
+                </div>
+            </article>
+            
+            <!-- Intelligence Engine -->
+            <article class="project-card">
+                <div class="project-header">
+                    <div class="project-icon purple">🔍</div>
+                    <span class="project-status status-live">Live</span>
+                </div>
+                <h3 class="project-title">Intelligence Engine</h3>
+                <p class="project-description">
+                    Risk intelligence layer: insider trading, earnings consistency, 
+                    analyst sentiment, news monitoring, SEC filings analysis.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">FMP API</span>
+                    <span class="tech-badge">JSON Cache</span>
+                    <span class="tech-badge">Railway</span>
+                </div>
+            </article>
+            
+            <!-- Options Scanner -->
+            <article class="project-card">
+                <div class="project-header">
+                    <div class="project-icon green">📈</div>
+                    <span class="project-status status-live">Production</span>
+                </div>
+                <h3 class="project-title">Options Scanner</h3>
+                <p class="project-description">
+                    Live scanner for credit PUT spreads with ML-powered signal detection. 
+                    Timeout handling, auto-reconnect, graceful error recovery.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">ib_insync</span>
+                    <span class="tech-badge">scikit-learn</span>
+                    <span class="tech-badge">Docker</span>
+                </div>
+            </article>
+            
+            <!-- ML Jury Engine -->
+            <article class="project-card">
+                <div class="project-header">
+                    <div class="project-icon purple">🧠</div>
+                    <span class="project-status status-live">Production</span>
+                </div>
+                <h3 class="project-title">ML Jury Engine</h3>
+                <p class="project-description">
+                    Weighted voting ensemble: RF (35%) + MLP (40%) + XGBoost (25%). 
+                    Thread-safe loading with VETO mechanism for risk management.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">XGBoost</span>
+                    <span class="tech-badge">scikit-learn</span>
+                    <span class="tech-badge">joblib</span>
+                </div>
+            </article>
+            
+            <!-- IBKR Data Aggregator -->
+            <article class="project-card">
+                <div class="project-header">
+                    <div class="project-icon blue">📡</div>
+                    <span class="project-status status-live">Production</span>
+                </div>
+                <h3 class="project-title">IBKR Data Aggregator</h3>
+                <p class="project-description">
+                    High-performance collector for 5,600+ tickers. Thread-safe SQLite 
+                    with WAL mode, automatic cache repair, parallel processing.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">IBKR API</span>
+                    <span class="tech-badge">SQLite</span>
+                    <span class="tech-badge">asyncio</span>
+                </div>
+            </article>
+            
+            <!-- Stock Trader -->
+            <article class="project-card">
+                <div class="project-header">
+                    <div class="project-icon green">💹</div>
+                    <span class="project-status status-live">Live</span>
+                </div>
+                <h3 class="project-title">Stock Trading Bot</h3>
+                <p class="project-description">
+                    Dual stop protection (fixed SL + trailing), bracket orders, 
+                    paper/live mode switching, daily limits enforcement.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">ib_insync</span>
+                    <span class="tech-badge">YAML</span>
+                    <span class="tech-badge">pytz</span>
+                </div>
+            </article>
+            
+            <!-- Pearls Scanner API -->
+            <article class="project-card">
+                <div class="project-header">
+                    <div class="project-icon green">💎</div>
+                    <span class="project-status status-live">Live API</span>
+                </div>
+                <h3 class="project-title">Pearls Scanner API</h3>
+                <p class="project-description">
+                    REST API for multi-market AEM scanning. 9 global markets, 
+                    API key auth, CSV/log exports, async processing.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">Flask</span>
+                    <span class="tech-badge">Docker</span>
+                    <span class="tech-badge">TradingView</span>
+                </div>
+            </article>
+            
+            <!-- Monitoring Stack -->
+            <article class="project-card">
+                <div class="project-header">
+                    <div class="project-icon blue">📊</div>
+                    <span class="project-status status-live">Production</span>
+                </div>
+                <h3 class="project-title">Monitoring Stack</h3>
+                <p class="project-description">
+                    Prometheus metrics, Grafana dashboards, Loki log aggregation. 
+                    cAdvisor for containers, Alertmanager for notifications.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-badge">Prometheus</span>
+                    <span class="tech-badge">Grafana</span>
+                    <span class="tech-badge">Loki</span>
+                    <span class="tech-badge">Docker</span>
+                </div>
+            </article>
+            
+            <!-- Workflow Orchestration -->
+            <article class="project-card">
+                <div class="project-header">
+                    <div class="project-icon orange">🔄</div>
+                    <span class="project-status status-live">Production</span>
+                </div>
+                <h3 class="project-title">Workflow Orchestration</h3>
+                <p class="project-description">
+                    Self-hosted GitHub Actions runner, time-based trading logic, 
+                    concurrency groups, multi-gateway coordination.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-badge">GitHub Actions</span>
+                    <span class="tech-badge">YAML</span>
+                    <span class="tech-badge">Bash</span>
+                    <span class="tech-badge">Telegram</span>
+                </div>
+            </article>
+        </div>
+    </section>
+    
+    <!-- Architecture -->
+    <section id="architecture">
+        <div class="section-header">
+            <div class="section-tag">// System Design</div>
+            <h2 class="section-title">Infrastructure Architecture</h2>
+        </div>
+        
+        <div class="architecture-container">
+            <pre class="architecture-pre">
+<span class="green">┌─────────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="green">│</span>                                <span class="blue">CLOUD SERVICES (Railway)</span>                                   <span class="green">│</span>
+<span class="green">│</span>  ┌────────────────────┐  ┌────────────────────┐  ┌────────────────────┐                    <span class="green">│</span>
+<span class="green">│</span>  │   <span class="orange">GARP Ranking</span>      │  │  <span class="orange">Contra Scanner</span>   │  │  <span class="orange">Pearls Scanner</span>   │                    <span class="green">│</span>
+<span class="green">│</span>  │   FastAPI + HTML   │  │  FastAPI + HTML    │  │  Flask + REST API  │                    <span class="green">│</span>
+<span class="green">│</span>  │   S&P 500 Analysis │  │  ML Signal Viewer  │  │  9 Global Markets  │                    <span class="green">│</span>
+<span class="green">│</span>  └────────────────────┘  └────────────────────┘  └────────────────────┘                    <span class="green">│</span>
+<span class="green">│</span>           │                        │                        │                              <span class="green">│</span>
+<span class="green">│</span>           └────────────────────────┼────────────────────────┘                              <span class="green">│</span>
+<span class="green">│</span>                                    │ <span class="purple">Data APIs: FMP, Finnhub, TradingView, yfinance</span>        <span class="green">│</span>
+<span class="green">└────────────────────────────────────┼────────────────────────────────────────────────────────┘</span>
+                                     │
+<span class="blue">┌────────────────────────────────────┼────────────────────────────────────────────────────────┐</span>
+<span class="blue">│</span>                              <span class="green">VERSION CONTROL (GitHub)</span>                                      <span class="blue">│</span>
+<span class="blue">│</span>  ┌──────────────────────────────────────────────────────────────────────────────────────┐  <span class="blue">│</span>
+<span class="blue">│</span>  │  .github/workflows/              docker/                    monitoring/              │  <span class="blue">│</span>
+<span class="blue">│</span>  │  ├── scheduler.yml               ├── options-scanner/       └── docker-compose       │  <span class="blue">│</span>
+<span class="blue">│</span>  │  ├── options-trading.yml         ├── ml-scanner/            └── prometheus.yml       │  <span class="blue">│</span>
+<span class="blue">│</span>  │  ├── stock-trading.yml           ├── stock-trader/          └── grafana/             │  <span class="blue">│</span>
+<span class="blue">│</span>  │  └── pearls-scanner.yml          └── pearls-scanner/        └── loki/                │  <span class="blue">│</span>
+<span class="blue">│</span>  └──────────────────────────────────────────────────────────────────────────────────────┘  <span class="blue">│</span>
+<span class="blue">│</span>                                          │ <span class="purple">trigger</span>                                          <span class="blue">│</span>
+<span class="blue">│</span>                                          ▼                                                  <span class="blue">│</span>
+<span class="blue">│</span>  ┌──────────────────────────────────────────────────────────────────────────────────────┐  <span class="blue">│</span>
+<span class="blue">│</span>  │                    <span class="green">GitHub Actions (Self-hosted Runner)</span>                                │  <span class="blue">│</span>
+<span class="blue">│</span>  │   <span class="green">Gateway</span> ──► <span class="blue">Data Fetch</span> ──► <span class="purple">ML Scan</span> ──► <span class="orange">Trade</span> ──► <span class="blue">Sync</span> ──► <span class="green">Cleanup</span>                  │  <span class="blue">│</span>
+<span class="blue">│</span>  │   └── <span class="purple">concurrency: trading-system</span>  └── <span class="orange">time: scan < 15:00, trade ≥ 15:00 PL</span> ───┘   │  <span class="blue">│</span>
+<span class="blue">│</span>  └──────────────────────────────────────────────────────────────────────────────────────┘  <span class="blue">│</span>
+<span class="blue">└────────────────────────────────────┬────────────────────────────────────────────────────────┘</span>
+                                     │ <span class="purple">SSH</span>
+                                     ▼
+<span class="orange">┌────────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="orange">│</span>                              <span class="green">PRODUCTION SERVER (VPS)</span>                                       <span class="orange">│</span>
+<span class="orange">│</span>  <span class="purple">┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐</span>     <span class="orange">│</span>
+<span class="orange">│</span>  <span class="purple">│ib-gateway │ │ib-gateway │ │  options  │ │   stock   │ │    ML     │ │  pearls   │</span>     <span class="orange">│</span>
+<span class="orange">│</span>  <span class="purple">│    -1     │ │    -2     │ │  scanner  │ │  trader   │ │  engine   │ │  scanner  │</span>     <span class="orange">│</span>
+<span class="orange">│</span>  <span class="purple">│ (stocks)  │ │ (options) │ │           │ │ dual-stop │ │ ensemble  │ │           │</span>     <span class="orange">│</span>
+<span class="orange">│</span>  <span class="purple">└─────┬─────┘ └─────┬─────┘ └─────┬─────┘ └─────┬─────┘ └─────┬─────┘ └─────┬─────┘</span>     <span class="orange">│</span>
+<span class="orange">│</span>        └─────────────┴─────────────┴─────────────┴─────────────┴─────────────┘           <span class="orange">│</span>
+<span class="orange">│</span>                                    <span class="green">trading-network</span>                                        <span class="orange">│</span>
+<span class="orange">│</span>  <span class="blue">┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐</span>                  <span class="orange">│</span>
+<span class="orange">│</span>  <span class="blue">│prometheus │ │  grafana  │ │   loki    │ │ promtail  │ │ cadvisor  │</span>                  <span class="orange">│</span>
+<span class="orange">│</span>  <span class="blue">│   :9090   │ │   :3000   │ │   :3100   │ │  (logs)   │ │   :8080   │</span>                  <span class="orange">│</span>
+<span class="orange">│</span>  <span class="blue">└───────────┘ └───────────┘ └───────────┘ └───────────┘ └───────────┘</span>                  <span class="orange">│</span>
+<span class="orange">│</span>                                    <span class="blue">monitoring-network</span>                                     <span class="orange">│</span>
+<span class="orange">└────────────────────────────────────────────────────────────────────────────────────────────┘</span>
+            </pre>
+        </div>
+    </section>
+    
+    <!-- Tech Stack -->
+    <section id="stack">
+        <div class="section-header">
+            <div class="section-tag">// Technologies</div>
+            <h2 class="section-title">Tech Stack</h2>
+        </div>
+        
+        <div class="tech-grid">
+            <div class="tech-category">
+                <h3 class="tech-category-title">Languages</h3>
+                <div class="tech-list">
+                    <span class="tech-item">Python 3.11</span>
+                    <span class="tech-item">Bash</span>
+                    <span class="tech-item">SQL</span>
+                    <span class="tech-item">PL/SQL</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h3 class="tech-category-title">Machine Learning</h3>
+                <div class="tech-list">
+                    <span class="tech-item">scikit-learn</span>
+                    <span class="tech-item">XGBoost</span>
+                    <span class="tech-item">LightGBM</span>
+                    <span class="tech-item">pandas</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h3 class="tech-category-title">Trading & Data</h3>
+                <div class="tech-list">
+                    <span class="tech-item">IBKR API</span>
+                    <span class="tech-item">FMP API</span>
+                    <span class="tech-item">Finnhub</span>
+                    <span class="tech-item">yfinance</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h3 class="tech-category-title">Web Frameworks</h3>
+                <div class="tech-list">
+                    <span class="tech-item">FastAPI</span>
+                    <span class="tech-item">Flask</span>
+                    <span class="tech-item">uvicorn</span>
+                    <span class="tech-item">Railway</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h3 class="tech-category-title">Infrastructure</h3>
+                <div class="tech-list">
+                    <span class="tech-item">Docker</span>
+                    <span class="tech-item">GitHub Actions</span>
+                    <span class="tech-item">Linux</span>
+                    <span class="tech-item">Ansible</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h3 class="tech-category-title">Monitoring</h3>
+                <div class="tech-list">
+                    <span class="tech-item">Prometheus</span>
+                    <span class="tech-item">Grafana</span>
+                    <span class="tech-item">Loki</span>
+                    <span class="tech-item">Telegram</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Certifications -->
+        <div class="certs-grid">
+            <div class="cert-card">
+                <div class="cert-icon">🏆</div>
+                <div class="cert-info">
+                    <h4>Oracle Database OCP</h4>
+                    <p>10g, 11g, 12c Administrator Certified Professional</p>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-icon">☀️</div>
+                <div class="cert-info">
+                    <h4>Sun Certified Solaris Admin</h4>
+                    <p>System Administrator for Solaris 10 OS</p>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-icon">📚</div>
+                <div class="cert-info">
+                    <h4>Master's Degree</h4>
+                    <p>Telecommunications, Technical University of Wrocław</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact -->
+    <section id="contact">
+        <div class="section-header">
+            <div class="section-tag">// Get in Touch</div>
+            <h2 class="section-title">Let's Connect</h2>
+        </div>
+        
+        <div class="contact-grid">
+            <a href="mailto:marcin.bury@gmail.com" class="contact-card">
+                <div class="contact-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </div>
+                <h4>Email</h4>
+                <p>marcin.bury@gmail.com</p>
+            </a>
+            
+            <a href="https://www.linkedin.com/in/marcinbury/" target="_blank" class="contact-card">
+                <div class="contact-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div>
+                <h4>LinkedIn</h4>
+                <p>linkedin.com/in/marcinbury</p>
+            </a>
+            
+            <a href="https://github.com/burdzik2033" target="_blank" class="contact-card">
+                <div class="contact-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </div>
+                <h4>GitHub</h4>
+                <p>github.com/burdzik2033</p>
+            </a>
+            
+            <a href="https://garp.up.railway.app/" target="_blank" class="contact-card">
+                <div class="contact-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                </div>
+                <h4>GARP Ranking</h4>
+                <p>Live Fundamental Analysis</p>
+            </a>
+            
+            <a href="https://contra-scanner.up.railway.app/" target="_blank" class="contact-card">
+                <div class="contact-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                    </svg>
+                </div>
+                <h4>Contra Scanner</h4>
+                <p>ML Signal Dashboard</p>
+            </a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/burdzik2033" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/marcinbury/" target="_blank">LinkedIn</a>
+            <a href="mailto:marcin.bury@gmail.com">Email</a>
+            <a href="https://garp.up.railway.app/" target="_blank">GARP</a>
+            <a href="https://contra-scanner.up.railway.app/" target="_blank">Contra</a>
+        </div>
+        <p class="footer-copy">© 2025 Marcin Bury | Platform Engineer & Algorithmic Trader | Wrocław, Poland</p>
+    </footer>
+    
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+        
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        
+        document.querySelectorAll('.project-card, .tech-category, .strategy-card, .cert-card, .contact-card, .highlight-item, .timeline-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>

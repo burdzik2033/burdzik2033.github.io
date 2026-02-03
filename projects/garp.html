@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GARP Fundamental Ranking | Marcin Bury</title>
+    <meta name="description" content="Growth at Reasonable Price - Comprehensive S&P 500 fundamental analysis system with 17 metrics, Intelligence layer, and daily rankings.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1a1a25;
+            --accent-green: #00ff88;
+            --accent-blue: #00d4ff;
+            --accent-purple: #a855f7;
+            --accent-orange: #ff6b35;
+            --accent-yellow: #fbbf24;
+            --accent-red: #ef4444;
+            --text-primary: #e8e8ed;
+            --text-secondary: #8888a0;
+            --text-muted: #555566;
+            --border-color: #2a2a3a;
+            --gradient-main: linear-gradient(135deg, var(--accent-yellow), var(--accent-green));
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(251, 191, 36, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(251, 191, 36, 0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 1.25rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, 0.9);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+        }
+        
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-back:hover { color: var(--accent-yellow); }
+        
+        .nav-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .nav-links { display: flex; gap: 1.5rem; }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--text-primary);
+            background: rgba(251, 191, 36, 0.1);
+        }
+        
+        .nav-links a.primary {
+            background: var(--gradient-main);
+            color: var(--bg-primary);
+            font-weight: 600;
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 10rem 4rem 5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(251, 191, 36, 0.15);
+            color: var(--accent-yellow);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-badge::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .hero-stat {
+            text-align: left;
+        }
+        
+        .hero-stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-yellow);
+        }
+        
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-main);
+            color: var(--bg-primary);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--accent-yellow);
+        }
+        
+        /* Sections */
+        section {
+            padding: 5rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            margin-bottom: 3rem;
+        }
+        
+        .section-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-yellow);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        /* Methodology */
+        .methodology-intro {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin-bottom: 3rem;
+        }
+        
+        .scoring-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .scoring-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .scoring-card:hover {
+            border-color: var(--accent-yellow);
+            transform: translateY(-4px);
+        }
+        
+        .scoring-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .scoring-card h3 {
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .scoring-card-points {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-yellow);
+        }
+        
+        .metric-list {
+            list-style: none;
+        }
+        
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.85rem;
+        }
+        
+        .metric-item:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-name {
+            color: var(--text-secondary);
+        }
+        
+        .metric-weight {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+        }
+        
+        .metric-range {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+        
+        /* Intelligence Section */
+        .intel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .intel-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        
+        .intel-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .intel-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .intel-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .intel-feature {
+            font-size: 0.7rem;
+            padding: 0.35rem 0.6rem;
+            background: rgba(251, 191, 36, 0.1);
+            border-radius: 4px;
+            color: var(--accent-yellow);
+        }
+        
+        .signal-levels {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        
+        .signal-level {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.75rem;
+        }
+        
+        .signal-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+        }
+        
+        .signal-dot.green { background: var(--accent-green); }
+        .signal-dot.yellow { background: var(--accent-yellow); }
+        .signal-dot.red { background: var(--accent-red); }
+        
+        /* Architecture */
+        .arch-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            overflow-x: auto;
+        }
+        
+        .arch-pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            white-space: pre;
+        }
+        
+        .arch-pre .yellow { color: var(--accent-yellow); }
+        .arch-pre .green { color: var(--accent-green); }
+        .arch-pre .blue { color: var(--accent-blue); }
+        .arch-pre .purple { color: var(--accent-purple); }
+        .arch-pre .orange { color: var(--accent-orange); }
+        
+        /* Tech Stack */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tech-category {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .tech-category h4 {
+            font-size: 0.75rem;
+            color: var(--accent-yellow);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+        
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tech-item {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            padding: 0.4rem 0.65rem;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+        }
+        
+        /* Data Sources */
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+        
+        .source-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .source-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .source-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 4rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-nav a:hover {
+            color: var(--accent-yellow);
+        }
+        
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-title { display: none; }
+            .hero, section { padding: 4rem 1.5rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero-stats { gap: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    
+    <nav>
+        <a href="../index.html" class="nav-back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Portfolio
+        </a>
+        <span class="nav-title">GARP Fundamental Ranking</span>
+        <div class="nav-links">
+            <a href="#methodology">Methodology</a>
+            <a href="#intelligence">Intelligence</a>
+            <a href="#tech">Tech Stack</a>
+            <a href="https://garp.up.railway.app/" target="_blank" class="primary">Live Dashboard →</a>
+        </div>
+    </nav>
+    
+    <!-- Hero -->
+    <header class="hero">
+        <div class="hero-badge">LIVE • Daily Updates</div>
+        <h1><span>GARP</span> Fundamental<br>Ranking System</h1>
+        <p class="hero-description">
+            Comprehensive fundamental analysis of S&P 500 companies using Growth at Reasonable Price methodology. 
+            17 metrics across 4 categories, enhanced with real-time Intelligence layer monitoring 
+            insider trading, earnings, analyst sentiment, news, and SEC filings.
+        </p>
+        
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-value">S&P 500</div>
+                <div class="hero-stat-label">Companies Analyzed</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">17</div>
+                <div class="hero-stat-label">Scoring Metrics</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">102</div>
+                <div class="hero-stat-label">Max Score Points</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">5</div>
+                <div class="hero-stat-label">Intel Categories</div>
+            </div>
+        </div>
+        
+        <div class="hero-actions">
+            <a href="https://garp.up.railway.app/" target="_blank" class="btn btn-primary">
+                Open Live Dashboard
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                </svg>
+            </a>
+            <a href="https://github.com/burdzik2033" target="_blank" class="btn btn-secondary">View Source Code</a>
+        </div>
+    </header>
+    
+    <!-- Methodology Section -->
+    <section id="methodology">
+        <div class="section-header">
+            <div class="section-tag">// Methodology</div>
+            <h2 class="section-title">Scoring System</h2>
+        </div>
+        
+        <p class="methodology-intro">
+            Each company is scored across 4 categories with a maximum of 102 points. 
+            Metrics use linear scaling between worst and best thresholds - 
+            companies performing below "worst" get 0 points, above "best" get full weight.
+            The system combines historical performance with forward-looking analyst estimates.
+        </p>
+        
+        <div class="scoring-grid">
+            <!-- Growth -->
+            <div class="scoring-card">
+                <div class="scoring-card-header">
+                    <h3>📈 Growth</h3>
+                    <span class="scoring-card-points">65 pts</span>
+                </div>
+                <ul class="metric-list">
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">Revenue 5Y Growth</span>
+                            <div class="metric-range">25% → 65%</div>
+                        </div>
+                        <span class="metric-weight">5 pts</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">Revenue 2Y Forecast</span>
+                            <div class="metric-range">5% → 15%</div>
+                        </div>
+                        <span class="metric-weight">10 pts</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">EPS 5Y Growth</span>
+                            <div class="metric-range">35% → 100%</div>
+                        </div>
+                        <span class="metric-weight">5 pts</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">EPS 2Y Forecast</span>
+                            <div class="metric-range">5% → 15%</div>
+                        </div>
+                        <span class="metric-weight">7 pts</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">EPS 5Y Forecast</span>
+                            <div class="metric-range">5% → 10%</div>
+                        </div>
+                        <span class="metric-weight">7 pts</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">EBITDA Margin</span>
+                            <div class="metric-range">15% → 35%</div>
+                        </div>
+                        <span class="metric-weight">5 pts</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">ROIC</span>
+                            <div class="metric-range">10% → 25%</div>
+                        </div>
+                        <span class="metric-weight">5 pts</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">ROA</span>
+                            <div class="metric-range">10% → 20%</div>
+                        </div>
+                        <span class="metric-weight">5 pts</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">CFO 5Y Growth</span>
+                            <div class="metric-range">20% → 100%</div>
+                        </div>
+                        <span class="metric-weight">6 pts</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">CFO 2Y Forecast</span>
+                            <div class="metric-range">10% → 30%</div>
+                        </div>
+                        <span class="metric-weight">10 pts</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Fundamentals -->
+            <div class="scoring-card">
+                <div class="scoring-card-header">
+                    <h3>🏦 Fundamentals</h3>
+                    <span class="scoring-card-points">4 pts</span>
+                </div>
+                <ul class="metric-list">
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">Ohlson Bankruptcy Prob.</span>
+                            <div class="metric-range">3% → 0.5% (lower better)</div>
+                        </div>
+                        <span class="metric-weight">1 pt</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">Debt to Assets</span>
+                            <div class="metric-range">40% → 10% (lower better)</div>
+                        </div>
+                        <span class="metric-weight">1 pt</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">Interest Coverage</span>
+                            <div class="metric-range">1x → 4x</div>
+                        </div>
+                        <span class="metric-weight">1 pt</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">CFO to Debt</span>
+                            <div class="metric-range">0.2x → 0.7x</div>
+                        </div>
+                        <span class="metric-weight">1 pt</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Value -->
+            <div class="scoring-card">
+                <div class="scoring-card-header">
+                    <h3>💰 Value</h3>
+                    <span class="scoring-card-points">30 pts</span>
+                </div>
+                <ul class="metric-list">
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">Upside Potential</span>
+                            <div class="metric-range">0% → 25%</div>
+                        </div>
+                        <span class="metric-weight">25 pts</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">Price Target Decline (45d)</span>
+                            <div class="metric-range">-5% → 0% (closer to 0 better)</div>
+                        </div>
+                        <span class="metric-weight">5 pts</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Must Have -->
+            <div class="scoring-card">
+                <div class="scoring-card-header">
+                    <h3>✅ Must Have</h3>
+                    <span class="scoring-card-points">3 pts</span>
+                </div>
+                <ul class="metric-list">
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">Price > $10</span>
+                            <div class="metric-range">Binary filter</div>
+                        </div>
+                        <span class="metric-weight">1 pt</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">EPS Estimates Count</span>
+                            <div class="metric-range">9 → 10+ analysts</div>
+                        </div>
+                        <span class="metric-weight">1 pt</span>
+                    </li>
+                    <li class="metric-item">
+                        <div>
+                            <span class="metric-name">CFO Annual > 0</span>
+                            <div class="metric-range">Binary filter</div>
+                        </div>
+                        <span class="metric-weight">1 pt</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Intelligence Section -->
+    <section id="intelligence">
+        <div class="section-header">
+            <div class="section-tag">// Risk Intelligence</div>
+            <h2 class="section-title">Intelligence Layer</h2>
+        </div>
+        
+        <p class="methodology-intro">
+            Beyond fundamental scoring, each company is monitored for risk signals across 5 dimensions.
+            Traffic light system (🟢 Green / 🟡 Yellow / 🔴 Red) provides quick risk assessment.
+        </p>
+        
+        <div class="intel-grid">
+            <div class="intel-card">
+                <h3>👤 Insider Trading</h3>
+                <p>
+                    Monitors insider transactions over 90 days. Tracks buy/sell ratio, 
+                    transaction volume, and identifies unusual cluster selling patterns.
+                </p>
+                <div class="intel-features">
+                    <span class="intel-feature">Buy/Sell Ratio</span>
+                    <span class="intel-feature">Transaction Count</span>
+                    <span class="intel-feature">Net Value ($)</span>
+                    <span class="intel-feature">Cluster Detection</span>
+                </div>
+                <div class="signal-levels">
+                    <div class="signal-level"><span class="signal-dot green"></span> Net buying</div>
+                    <div class="signal-level"><span class="signal-dot yellow"></span> Mixed</div>
+                    <div class="signal-level"><span class="signal-dot red"></span> Heavy selling</div>
+                </div>
+            </div>
+            
+            <div class="intel-card">
+                <h3>💰 Earnings Consistency</h3>
+                <p>
+                    Analyzes earnings history: beat/miss ratio, surprise magnitude, 
+                    and trend direction over recent quarters.
+                </p>
+                <div class="intel-features">
+                    <span class="intel-feature">Beat/Miss Ratio</span>
+                    <span class="intel-feature">Avg Surprise %</span>
+                    <span class="intel-feature">Consecutive Beats</span>
+                    <span class="intel-feature">Trend Analysis</span>
+                </div>
+                <div class="signal-levels">
+                    <div class="signal-level"><span class="signal-dot green"></span> Consistent beats</div>
+                    <div class="signal-level"><span class="signal-dot yellow"></span> Mixed record</div>
+                    <div class="signal-level"><span class="signal-dot red"></span> Recent misses</div>
+                </div>
+            </div>
+            
+            <div class="intel-card">
+                <h3>📊 Analyst Sentiment</h3>
+                <p>
+                    Aggregates analyst recommendations, price targets, and recent rating changes.
+                    Tracks consensus shifts and upgrade/downgrade activity.
+                </p>
+                <div class="intel-features">
+                    <span class="intel-feature">Consensus Rating</span>
+                    <span class="intel-feature">Price Target Range</span>
+                    <span class="intel-feature">Recent Grades</span>
+                    <span class="intel-feature">Upgrade/Downgrade</span>
+                </div>
+                <div class="signal-levels">
+                    <div class="signal-level"><span class="signal-dot green"></span> Strong Buy</div>
+                    <div class="signal-level"><span class="signal-dot yellow"></span> Hold</div>
+                    <div class="signal-level"><span class="signal-dot red"></span> Sell</div>
+                </div>
+            </div>
+            
+            <div class="intel-card">
+                <h3>📰 News Monitor</h3>
+                <p>
+                    Scans news for risk keywords: lawsuits, investigations, guidance cuts, 
+                    executive departures. Detects volume spikes indicating potential events.
+                </p>
+                <div class="intel-features">
+                    <span class="intel-feature">Volume 7d</span>
+                    <span class="intel-feature">Risk Keywords</span>
+                    <span class="intel-feature">Spike Detection</span>
+                    <span class="intel-feature">Flagged Articles</span>
+                </div>
+                <div class="signal-levels">
+                    <div class="signal-level"><span class="signal-dot green"></span> Normal</div>
+                    <div class="signal-level"><span class="signal-dot yellow"></span> Elevated</div>
+                    <div class="signal-level"><span class="signal-dot red"></span> Risk flagged</div>
+                </div>
+            </div>
+            
+            <div class="intel-card">
+                <h3>📋 SEC Filings</h3>
+                <p>
+                    Monitors SEC filing activity: 8-K events, 10-K/10-Q reports, 
+                    late filings, and amendments that may indicate issues.
+                </p>
+                <div class="intel-features">
+                    <span class="intel-feature">8-K Count</span>
+                    <span class="intel-feature">Late Filings</span>
+                    <span class="intel-feature">Amendments</span>
+                    <span class="intel-feature">Red Flags</span>
+                </div>
+                <div class="signal-levels">
+                    <div class="signal-level"><span class="signal-dot green"></span> Clean</div>
+                    <div class="signal-level"><span class="signal-dot yellow"></span> Activity</div>
+                    <div class="signal-level"><span class="signal-dot red"></span> Late/Issues</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Architecture -->
+    <section id="architecture">
+        <div class="section-header">
+            <div class="section-tag">// System Design</div>
+            <h2 class="section-title">Architecture</h2>
+        </div>
+        
+        <div class="arch-container">
+            <pre class="arch-pre">
+<span class="yellow">┌─────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="yellow">│</span>                           <span class="green">DATA COLLECTION (Daily)</span>                             <span class="yellow">│</span>
+<span class="yellow">│</span>                                                                                 <span class="yellow">│</span>
+<span class="yellow">│</span>    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐   <span class="yellow">│</span>
+<span class="yellow">│</span>    │  <span class="blue">FMP API</span>    │    │  <span class="blue">Finnhub</span>   │    │<span class="blue">Alpha Vantage</span>│    │  <span class="blue">yfinance</span>  │   <span class="yellow">│</span>
+<span class="yellow">│</span>    │  (Primary)  │    │ (Fallback) │    │ (Fallback)  │    │ (Fallback)  │   <span class="yellow">│</span>
+<span class="yellow">│</span>    └──────┬──────┘    └──────┬──────┘    └──────┬──────┘    └──────┬──────┘   <span class="yellow">│</span>
+<span class="yellow">│</span>           └──────────────────┴──────────────────┴──────────────────┘           <span class="yellow">│</span>
+<span class="yellow">│</span>                                       │                                         <span class="yellow">│</span>
+<span class="yellow">│</span>                                       ▼                                         <span class="yellow">│</span>
+<span class="yellow">│</span>                        ┌──────────────────────────────┐                        <span class="yellow">│</span>
+<span class="yellow">│</span>                        │    <span class="purple">analiza_fundamentalna</span>    │                        <span class="yellow">│</span>
+<span class="yellow">│</span>                        │    17 Metrics Calculation    │                        <span class="yellow">│</span>
+<span class="yellow">│</span>                        │    Piotroski F-Score         │                        <span class="yellow">│</span>
+<span class="yellow">│</span>                        └──────────────┬───────────────┘                        <span class="yellow">│</span>
+<span class="yellow">│</span>                                       │                                         <span class="yellow">│</span>
+<span class="yellow">│</span>           ┌───────────────────────────┼───────────────────────────┐            <span class="yellow">│</span>
+<span class="yellow">│</span>           ▼                           ▼                           ▼            <span class="yellow">│</span>
+<span class="yellow">│</span>    ┌─────────────┐           ┌─────────────┐           ┌─────────────┐         <span class="yellow">│</span>
+<span class="yellow">│</span>    │  <span class="orange">ranking</span>    │           │<span class="orange">intelligence</span>│           │  <span class="orange">history</span>   │         <span class="yellow">│</span>
+<span class="yellow">│</span>    │   .xlsx     │           │   _cache    │           │   .json     │         <span class="yellow">│</span>
+<span class="yellow">│</span>    │             │           │   .json     │           │  snapshots  │         <span class="yellow">│</span>
+<span class="yellow">│</span>    └──────┬──────┘           └──────┬──────┘           └──────┬──────┘         <span class="yellow">│</span>
+<span class="yellow">│</span>           └──────────────────────────┴──────────────────────────┘              <span class="yellow">│</span>
+<span class="yellow">└─────────────────────────────────────────┬───────────────────────────────────────┘</span>
+                                          │
+                                          ▼
+<span class="green">┌─────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="green">│</span>                              <span class="blue">RAILWAY DEPLOYMENT</span>                                <span class="green">│</span>
+<span class="green">│</span>                                                                                 <span class="green">│</span>
+<span class="green">│</span>                        ┌──────────────────────────────┐                        <span class="green">│</span>
+<span class="green">│</span>                        │       <span class="purple">FastAPI + uvicorn</span>      │                        <span class="green">│</span>
+<span class="green">│</span>                        │     garp.up.railway.app     │                        <span class="green">│</span>
+<span class="green">│</span>                        └──────────────────────────────┘                        <span class="green">│</span>
+<span class="green">│</span>                                       │                                         <span class="green">│</span>
+<span class="green">│</span>              ┌───────────────────────┬┴┬───────────────────────┐               <span class="green">│</span>
+<span class="green">│</span>              ▼                       ▼ ▼                       ▼               <span class="green">│</span>
+<span class="green">│</span>       ┌────────────┐         ┌────────────┐         ┌────────────┐            <span class="green">│</span>
+<span class="green">│</span>       │  <span class="yellow">Ranking</span>   │         │ <span class="yellow">Intelligence</span>│         │  <span class="yellow">History</span>   │            <span class="green">│</span>
+<span class="green">│</span>       │   Table    │         │   Modal     │         │  Snapshot  │            <span class="green">│</span>
+<span class="green">│</span>       │   View     │         │   View      │         │   View     │            <span class="green">│</span>
+<span class="green">│</span>       └────────────┘         └────────────┘         └────────────┘            <span class="green">│</span>
+<span class="green">│</span>                                                                                 <span class="green">│</span>
+<span class="green">└─────────────────────────────────────────────────────────────────────────────────┘</span>
+            </pre>
+        </div>
+    </section>
+    
+    <!-- Tech Stack -->
+    <section id="tech">
+        <div class="section-header">
+            <div class="section-tag">// Tech Stack</div>
+            <h2 class="section-title">Technologies Used</h2>
+        </div>
+        
+        <div class="tech-grid">
+            <div class="tech-category">
+                <h4>Backend</h4>
+                <div class="tech-list">
+                    <span class="tech-item">Python 3.11</span>
+                    <span class="tech-item">FastAPI</span>
+                    <span class="tech-item">uvicorn</span>
+                    <span class="tech-item">pandas</span>
+                    <span class="tech-item">numpy</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h4>Data APIs</h4>
+                <div class="tech-list">
+                    <span class="tech-item">FMP (Primary)</span>
+                    <span class="tech-item">Finnhub</span>
+                    <span class="tech-item">Alpha Vantage</span>
+                    <span class="tech-item">yfinance</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h4>Frontend</h4>
+                <div class="tech-list">
+                    <span class="tech-item">HTML5</span>
+                    <span class="tech-item">CSS3</span>
+                    <span class="tech-item">JavaScript</span>
+                    <span class="tech-item">Responsive</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h4>Infrastructure</h4>
+                <div class="tech-list">
+                    <span class="tech-item">Railway</span>
+                    <span class="tech-item">Nixpacks</span>
+                    <span class="tech-item">GitHub</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h4>Data Storage</h4>
+                <div class="tech-list">
+                    <span class="tech-item">XLSX (Rankings)</span>
+                    <span class="tech-item">JSON (Intel/History)</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h4>Analysis</h4>
+                <div class="tech-list">
+                    <span class="tech-item">Piotroski F-Score</span>
+                    <span class="tech-item">Ohlson O-Score</span>
+                    <span class="tech-item">GARP Methodology</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Data Sources -->
+    <section>
+        <div class="section-header">
+            <div class="section-tag">// Data Sources</div>
+            <h2 class="section-title">API Integrations</h2>
+        </div>
+        
+        <div class="sources-grid">
+            <div class="source-card">
+                <h4>📊 FMP (Primary)</h4>
+                <p>Financial statements, ratios, price targets, analyst estimates</p>
+            </div>
+            <div class="source-card">
+                <h4>📈 Finnhub</h4>
+                <p>Real-time quotes, insider transactions, SEC filings</p>
+            </div>
+            <div class="source-card">
+                <h4>📉 Alpha Vantage</h4>
+                <p>Earnings calendar, fundamental data backup</p>
+            </div>
+            <div class="source-card">
+                <h4>🐍 yfinance</h4>
+                <p>Historical prices, company info fallback</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-nav">
+            <a href="../index.html">← Back to Portfolio</a>
+            <a href="contra.html">Contra Scanner →</a>
+            <a href="pearls.html">Pearls Scanner →</a>
+            <a href="options.html">Options Strategy →</a>
+        </div>
+        <p class="footer-copy">© 2025 Marcin Bury | GARP Fundamental Ranking System</p>
+    </footer>
+</body>
+</html>

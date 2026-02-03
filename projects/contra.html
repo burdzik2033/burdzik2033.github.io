@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contra Scanner | Marcin Bury</title>
+    <meta name="description" content="Contrarian stock selection strategy with ML Jury validation. VIX regime analysis, RSI extremes, and automated execution.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #16161f;
+            --accent-green: #00ff88;
+            --accent-blue: #00d4ff;
+            --accent-purple: #a855f7;
+            --accent-orange: #ff6b35;
+            --accent-yellow: #fbbf24;
+            --text-primary: #e8e8ed;
+            --text-secondary: #8888a0;
+            --text-muted: #555566;
+            --border-color: #2a2a3a;
+            --gradient-main: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow));
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 107, 53, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 107, 53, 0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 1.25rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, 0.9);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+        }
+        
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-back:hover { color: var(--accent-orange); }
+        
+        .nav-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .nav-links { display: flex; gap: 1.5rem; }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--text-primary);
+            background: rgba(255, 107, 53, 0.1);
+        }
+        
+        .nav-links a.primary {
+            background: var(--gradient-main);
+            color: var(--bg-primary);
+            font-weight: 600;
+        }
+        
+        .hero {
+            padding: 10rem 4rem 5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 107, 53, 0.15);
+            color: var(--accent-orange);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-badge::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .hero-stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+        }
+        
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-main);
+            color: var(--bg-primary);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover { border-color: var(--accent-orange); }
+        
+        section {
+            padding: 5rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header { margin-bottom: 3rem; }
+        
+        .section-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-orange);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        
+        .section-title { font-size: 2rem; font-weight: 700; }
+        
+        .section-intro {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin-bottom: 3rem;
+        }
+        
+        /* Flow Diagram */
+        .flow-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            overflow-x: auto;
+        }
+        
+        .flow-pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            white-space: pre;
+        }
+        
+        .flow-pre .orange { color: var(--accent-orange); }
+        .flow-pre .green { color: var(--accent-green); }
+        .flow-pre .blue { color: var(--accent-blue); }
+        .flow-pre .purple { color: var(--accent-purple); }
+        .flow-pre .yellow { color: var(--accent-yellow); }
+        
+        /* Components Grid */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .component-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .component-card:hover {
+            border-color: var(--accent-orange);
+            transform: translateY(-4px);
+        }
+        
+        .component-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .component-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .component-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .component-feature {
+            font-size: 0.7rem;
+            padding: 0.35rem 0.6rem;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 4px;
+            color: var(--accent-orange);
+        }
+        
+        /* ML Jury Section */
+        .jury-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .jury-model {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .jury-model h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .jury-weight {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-bottom: 0.5rem;
+        }
+        
+        .jury-model p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .jury-rules {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        
+        .jury-rules h4 {
+            margin-bottom: 1rem;
+        }
+        
+        .rule-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .rule-item:last-child { border-bottom: none; }
+        
+        .rule-icon {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        
+        .rule-icon.green { background: rgba(0, 255, 136, 0.15); }
+        .rule-icon.red { background: rgba(239, 68, 68, 0.15); }
+        
+        .rule-text { flex: 1; }
+        .rule-text strong { color: var(--text-primary); }
+        .rule-text span { color: var(--text-secondary); font-size: 0.9rem; }
+        
+        /* Tech Stack */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tech-category {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .tech-category h4 {
+            font-size: 0.75rem;
+            color: var(--accent-orange);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+        
+        .tech-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        
+        .tech-item {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            padding: 0.4rem 0.65rem;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+        }
+        
+        footer {
+            padding: 3rem 4rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-nav a:hover { color: var(--accent-orange); }
+        
+        .footer-copy { color: var(--text-muted); font-size: 0.85rem; }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-title { display: none; }
+            .hero, section { padding: 4rem 1.5rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .jury-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    
+    <nav>
+        <a href="../index.html" class="nav-back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Portfolio
+        </a>
+        <span class="nav-title">Contra Scanner</span>
+        <div class="nav-links">
+            <a href="#strategy">Strategy</a>
+            <a href="#ml-jury">ML Jury</a>
+            <a href="#tech">Tech Stack</a>
+            <a href="https://contra-scanner.up.railway.app/" target="_blank" class="primary">Live Dashboard →</a>
+        </div>
+    </nav>
+    
+    <header class="hero">
+        <div class="hero-badge">LIVE • Real-time Signals</div>
+        <h1><span>Contra</span> Scanner<br>ML-Powered Signals</h1>
+        <p class="hero-description">
+            Contrarian stock selection strategy adapted from options trading principles. 
+            Identifies oversold conditions using VIX regime analysis, technical indicators, 
+            and validates signals through a 3-model ML Jury ensemble before execution.
+        </p>
+        
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-value">3</div>
+                <div class="hero-stat-label">ML Models</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">75%</div>
+                <div class="hero-stat-label">Accept Threshold</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">VIX</div>
+                <div class="hero-stat-label">Regime Filter</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">2x</div>
+                <div class="hero-stat-label">Stop Protection</div>
+            </div>
+        </div>
+        
+        <div class="hero-actions">
+            <a href="https://contra-scanner.up.railway.app/" target="_blank" class="btn btn-primary">
+                Open Live Dashboard
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                </svg>
+            </a>
+            <a href="https://github.com/burdzik2033" target="_blank" class="btn btn-secondary">View Source Code</a>
+        </div>
+    </header>
+    
+    <!-- Strategy Section -->
+    <section id="strategy">
+        <div class="section-header">
+            <div class="section-tag">// Strategy</div>
+            <h2 class="section-title">Signal Generation Flow</h2>
+        </div>
+        
+        <p class="section-intro">
+            The strategy looks for oversold conditions in a favorable market regime. 
+            Multiple technical filters narrow down candidates, then ML models validate 
+            each signal before it's considered for execution.
+        </p>
+        
+        <div class="flow-container">
+            <pre class="flow-pre">
+<span class="orange">┌───────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="orange">│</span>                                 <span class="blue">MARKET REGIME CHECK</span>                                     <span class="orange">│</span>
+<span class="orange">│</span>                                                                                           <span class="orange">│</span>
+<span class="orange">│</span>      ┌─────────────────────┐         ┌─────────────────────┐                             <span class="orange">│</span>
+<span class="orange">│</span>      │     <span class="yellow">VIX Level</span>        │         │  <span class="yellow">VIX Percentile</span>     │                             <span class="orange">│</span>
+<span class="orange">│</span>      │     VIX > 20?       │         │  Percentile > 70?   │                             <span class="orange">│</span>
+<span class="orange">│</span>      └──────────┬──────────┘         └──────────┬──────────┘                             <span class="orange">│</span>
+<span class="orange">│</span>                 └──────────────┬────────────────┘                                        <span class="orange">│</span>
+<span class="orange">│</span>                                │                                                          <span class="orange">│</span>
+<span class="orange">│</span>                      <span class="green">✓ Risk-On Environment</span>                                              <span class="orange">│</span>
+<span class="orange">│</span>                      <span class="purple">✗ Skip if VIX too low</span>                                              <span class="orange">│</span>
+<span class="orange">└───────────────────────────────┬───────────────────────────────────────────────────────────┘</span>
+                                │
+                                ▼
+<span class="blue">┌───────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="blue">│</span>                              <span class="orange">TECHNICAL SCREENING</span>                                        <span class="blue">│</span>
+<span class="blue">│</span>                                                                                           <span class="blue">│</span>
+<span class="blue">│</span>    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐              <span class="blue">│</span>
+<span class="blue">│</span>    │  <span class="yellow">RSI(14)</span>    │    │ <span class="yellow">Bollinger</span>  │    │  <span class="yellow">SMA-200</span>   │    │  <span class="yellow">Volume</span>    │              <span class="blue">│</span>
+<span class="blue">│</span>    │   < 30      │    │ Price < LB  │    │ Dist > -8% │    │  Confirm   │              <span class="blue">│</span>
+<span class="blue">│</span>    │  (oversold) │    │ (breakout)  │    │ (not dead) │    │  (liquidity)│              <span class="blue">│</span>
+<span class="blue">│</span>    └──────┬──────┘    └──────┬──────┘    └──────┬──────┘    └──────┬──────┘              <span class="blue">│</span>
+<span class="blue">│</span>           └──────────────────┴──────────────────┴──────────────────┘                     <span class="blue">│</span>
+<span class="blue">│</span>                                       │                                                   <span class="blue">│</span>
+<span class="blue">│</span>                            <span class="green">All conditions must pass</span>                                      <span class="blue">│</span>
+<span class="blue">└───────────────────────────────────────┬───────────────────────────────────────────────────┘</span>
+                                        │
+                                        ▼
+<span class="purple">┌───────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="purple">│</span>                               <span class="green">ML JURY VALIDATION</span>                                        <span class="purple">│</span>
+<span class="purple">│</span>                                                                                           <span class="purple">│</span>
+<span class="purple">│</span>         ┌─────────────┐      ┌─────────────┐      ┌─────────────┐                        <span class="purple">│</span>
+<span class="purple">│</span>         │ <span class="blue">Random</span>      │      │    <span class="blue">MLP</span>      │      │  <span class="blue">XGBoost</span>   │                        <span class="purple">│</span>
+<span class="purple">│</span>         │ <span class="blue">Forest</span>      │      │  <span class="blue">Neural</span>    │      │  <span class="blue">Gradient</span>  │                        <span class="purple">│</span>
+<span class="purple">│</span>         │             │      │  <span class="blue">Network</span>   │      │  <span class="blue">Boosting</span>  │                        <span class="purple">│</span>
+<span class="purple">│</span>         │   <span class="orange">35%</span>       │      │    <span class="orange">40%</span>      │      │    <span class="orange">25%</span>     │                        <span class="purple">│</span>
+<span class="purple">│</span>         └──────┬──────┘      └──────┬──────┘      └──────┬──────┘                        <span class="purple">│</span>
+<span class="purple">│</span>                └──────────────────────┴──────────────────────┘                            <span class="purple">│</span>
+<span class="purple">│</span>                                       │                                                   <span class="purple">│</span>
+<span class="purple">│</span>                             <span class="yellow">Weighted Score Calculation</span>                                    <span class="purple">│</span>
+<span class="purple">│</span>                                       │                                                   <span class="purple">│</span>
+<span class="purple">│</span>                    ┌──────────────────┼──────────────────┐                                <span class="purple">│</span>
+<span class="purple">│</span>                    ▼                  ▼                  ▼                                <span class="purple">│</span>
+<span class="purple">│</span>             <span class="green">Score > 0.75</span>       <span class="yellow">Score 0.5-0.75</span>      <span class="purple">Any Model < 0.15</span>                        <span class="purple">│</span>
+<span class="purple">│</span>              <span class="green">ACCEPT</span>             <span class="yellow">REVIEW</span>               <span class="purple">VETO</span>                                 <span class="purple">│</span>
+<span class="purple">└───────────────────────────────────────┬───────────────────────────────────────────────────┘</span>
+                                        │
+                                        ▼
+<span class="green">┌───────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="green">│</span>                                <span class="orange">TRADE EXECUTION</span>                                          <span class="green">│</span>
+<span class="green">│</span>                                                                                           <span class="green">│</span>
+<span class="green">│</span>         ┌─────────────────────────────────────────────────────────────────┐              <span class="green">│</span>
+<span class="green">│</span>         │  <span class="blue">Position Sizing</span>  →  <span class="blue">Fixed Stop Loss</span>  →  <span class="blue">Trailing Stop</span>  →  <span class="blue">Execute</span> │              <span class="green">│</span>
+<span class="green">│</span>         │      (risk %)           (SL %)         (dynamic)        (IBKR)  │              <span class="green">│</span>
+<span class="green">│</span>         └─────────────────────────────────────────────────────────────────┘              <span class="green">│</span>
+<span class="green">│</span>                                                                                           <span class="green">│</span>
+<span class="green">│</span>                              <span class="yellow">Dual Stop Protection System</span>                                  <span class="green">│</span>
+<span class="green">└───────────────────────────────────────────────────────────────────────────────────────────┘</span>
+            </pre>
+        </div>
+    </section>
+    
+    <!-- Components -->
+    <section>
+        <div class="section-header">
+            <div class="section-tag">// Components</div>
+            <h2 class="section-title">System Components</h2>
+        </div>
+        
+        <div class="components-grid">
+            <div class="component-card">
+                <h3>📊 Market Regime Filter</h3>
+                <p>
+                    Analyzes VIX level and percentile ranking to determine if market conditions 
+                    are favorable for contrarian entries. Only trades in elevated volatility environments.
+                </p>
+                <div class="component-features">
+                    <span class="component-feature">VIX Level Check</span>
+                    <span class="component-feature">Historical Percentile</span>
+                    <span class="component-feature">Regime Classification</span>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>📈 Technical Scanner</h3>
+                <p>
+                    Multi-indicator screening using RSI for oversold conditions, 
+                    Bollinger Bands for volatility breakouts, and SMA-200 distance filter.
+                </p>
+                <div class="component-features">
+                    <span class="component-feature">RSI(14) < 30</span>
+                    <span class="component-feature">Bollinger Breakout</span>
+                    <span class="component-feature">SMA-200 Distance</span>
+                    <span class="component-feature">Volume Confirmation</span>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>🧠 ML Jury System</h3>
+                <p>
+                    3-model ensemble validates each signal. Weighted voting with VETO mechanism 
+                    prevents low-confidence trades from executing.
+                </p>
+                <div class="component-features">
+                    <span class="component-feature">Random Forest 35%</span>
+                    <span class="component-feature">MLP Neural Net 40%</span>
+                    <span class="component-feature">XGBoost 25%</span>
+                    <span class="component-feature">VETO Protection</span>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>⚡ Trade Execution</h3>
+                <p>
+                    Automated order execution through IBKR API with dual stop protection: 
+                    fixed stop loss for catastrophic protection plus trailing stop for profit lock.
+                </p>
+                <div class="component-features">
+                    <span class="component-feature">Fixed Stop Loss</span>
+                    <span class="component-feature">Trailing Stop</span>
+                    <span class="component-feature">Bracket Orders</span>
+                    <span class="component-feature">Position Limits</span>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>📱 Dashboard</h3>
+                <p>
+                    Real-time web dashboard showing current signals, market regime status, 
+                    model predictions, and execution status.
+                </p>
+                <div class="component-features">
+                    <span class="component-feature">Live Signals</span>
+                    <span class="component-feature">Regime Status</span>
+                    <span class="component-feature">Model Scores</span>
+                    <span class="component-feature">Telegram Alerts</span>
+                </div>
+            </div>
+            
+            <div class="component-card">
+                <h3>🔄 Workflow Orchestration</h3>
+                <p>
+                    GitHub Actions with self-hosted runner coordinates scan timing, 
+                    IBKR gateway management, and trade execution windows.
+                </p>
+                <div class="component-features">
+                    <span class="component-feature">Scheduled Runs</span>
+                    <span class="component-feature">Gateway Control</span>
+                    <span class="component-feature">Concurrency Groups</span>
+                    <span class="component-feature">Time-based Logic</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ML Jury -->
+    <section id="ml-jury">
+        <div class="section-header">
+            <div class="section-tag">// Machine Learning</div>
+            <h2 class="section-title">ML Jury System</h2>
+        </div>
+        
+        <p class="section-intro">
+            Three independent models vote on each signal. The weighted ensemble approach 
+            provides robustness against any single model's weaknesses, while the VETO mechanism 
+            prevents high-risk trades when any model shows strong disagreement.
+        </p>
+        
+        <div class="jury-grid">
+            <div class="jury-model">
+                <h4>🌲 Random Forest</h4>
+                <div class="jury-weight">35%</div>
+                <p>Ensemble of decision trees, robust to outliers</p>
+            </div>
+            <div class="jury-model">
+                <h4>🧠 MLP Neural Network</h4>
+                <div class="jury-weight">40%</div>
+                <p>Multi-layer perceptron, captures non-linear patterns</p>
+            </div>
+            <div class="jury-model">
+                <h4>🚀 XGBoost</h4>
+                <div class="jury-weight">25%</div>
+                <p>Gradient boosting, excellent on tabular data</p>
+            </div>
+        </div>
+        
+        <div class="jury-rules">
+            <h4>Decision Rules</h4>
+            <div class="rule-item">
+                <div class="rule-icon green">✓</div>
+                <div class="rule-text">
+                    <strong>ACCEPT</strong><br>
+                    <span>Weighted score > 0.75 → Execute trade</span>
+                </div>
+            </div>
+            <div class="rule-item">
+                <div class="rule-icon" style="background: rgba(251, 191, 36, 0.15);">~</div>
+                <div class="rule-text">
+                    <strong>REVIEW</strong><br>
+                    <span>Weighted score 0.5-0.75 → Manual review recommended</span>
+                </div>
+            </div>
+            <div class="rule-item">
+                <div class="rule-icon red">✗</div>
+                <div class="rule-text">
+                    <strong>VETO</strong><br>
+                    <span>Any model < 0.15 → Reject signal regardless of weighted score</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Tech Stack -->
+    <section id="tech">
+        <div class="section-header">
+            <div class="section-tag">// Tech Stack</div>
+            <h2 class="section-title">Technologies Used</h2>
+        </div>
+        
+        <div class="tech-grid">
+            <div class="tech-category">
+                <h4>Machine Learning</h4>
+                <div class="tech-list">
+                    <span class="tech-item">scikit-learn</span>
+                    <span class="tech-item">XGBoost</span>
+                    <span class="tech-item">joblib</span>
+                    <span class="tech-item">pandas</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h4>Trading</h4>
+                <div class="tech-list">
+                    <span class="tech-item">IBKR API</span>
+                    <span class="tech-item">ib_insync</span>
+                    <span class="tech-item">yfinance</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h4>Backend</h4>
+                <div class="tech-list">
+                    <span class="tech-item">Python 3.11</span>
+                    <span class="tech-item">FastAPI</span>
+                    <span class="tech-item">uvicorn</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h4>Infrastructure</h4>
+                <div class="tech-list">
+                    <span class="tech-item">Docker</span>
+                    <span class="tech-item">Railway</span>
+                    <span class="tech-item">GitHub Actions</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h4>Notifications</h4>
+                <div class="tech-list">
+                    <span class="tech-item">Telegram Bot</span>
+                    <span class="tech-item">Web Dashboard</span>
+                </div>
+            </div>
+            
+            <div class="tech-category">
+                <h4>Technical Analysis</h4>
+                <div class="tech-list">
+                    <span class="tech-item">RSI</span>
+                    <span class="tech-item">Bollinger Bands</span>
+                    <span class="tech-item">SMA/EMA</span>
+                    <span class="tech-item">VIX Analysis</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-nav">
+            <a href="../index.html">← Back to Portfolio</a>
+            <a href="garp.html">GARP Ranking →</a>
+            <a href="pearls.html">Pearls Scanner →</a>
+            <a href="options.html">Options Strategy →</a>
+        </div>
+        <p class="footer-copy">© 2025 Marcin Bury | Contra Scanner</p>
+    </footer>
+</body>
+</html>

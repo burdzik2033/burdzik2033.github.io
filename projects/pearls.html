@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pearls Scanner (AEM Clenow) | Marcin Bury</title>
+    <meta name="description" content="Multi-market momentum scanner based on Andreas Clenow methodology. 9 global markets, exponential regression momentum scoring.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #16161f;
+            --accent-green: #00ff88;
+            --accent-blue: #00d4ff;
+            --accent-purple: #a855f7;
+            --accent-orange: #ff6b35;
+            --text-primary: #e8e8ed;
+            --text-secondary: #8888a0;
+            --text-muted: #555566;
+            --border-color: #2a2a3a;
+            --gradient-main: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; }
+        
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(0, 255, 136, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 136, 0.02) 1px, transparent 1px);
+            background-size: 80px 80px; pointer-events: none; z-index: -1;
+        }
+        
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; padding: 1.25rem 4rem;
+            display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(20px); background: rgba(10, 10, 15, 0.9);
+            border-bottom: 1px solid var(--border-color); z-index: 1000;
+        }
+        
+        .nav-back { display: flex; align-items: center; gap: 0.75rem; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .nav-back:hover { color: var(--accent-green); }
+        .nav-title { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--text-primary); }
+        .nav-links { display: flex; gap: 1.5rem; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; padding: 0.5rem 1rem; border-radius: 6px; transition: all 0.3s; }
+        .nav-links a:hover { color: var(--text-primary); background: rgba(0, 255, 136, 0.1); }
+        .nav-links a.primary { background: var(--gradient-main); color: var(--bg-primary); font-weight: 600; }
+        
+        .hero { padding: 10rem 4rem 5rem; max-width: 1200px; margin: 0 auto; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(0, 255, 136, 0.15); color: var(--accent-green); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem; }
+        .hero-badge::before { content: ''; width: 8px; height: 8px; background: var(--accent-green); border-radius: 50%; animation: pulse 2s infinite; }
+        .hero h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
+        .hero h1 span { background: var(--gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero-description { font-size: 1.25rem; color: var(--text-secondary); max-width: 700px; margin-bottom: 2rem; }
+        .hero-stats { display: flex; gap: 3rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+        .hero-stat-value { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 700; color: var(--accent-green); }
+        .hero-stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn { padding: 1rem 2rem; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary { background: var(--gradient-main); color: var(--bg-primary); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3); }
+        .btn-secondary { background: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { border-color: var(--accent-green); }
+        
+        section { padding: 5rem 4rem; max-width: 1200px; margin: 0 auto; }
+        .section-header { margin-bottom: 3rem; }
+        .section-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent-green); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem; }
+        .section-title { font-size: 2rem; font-weight: 700; }
+        .section-intro { font-size: 1.1rem; color: var(--text-secondary); max-width: 800px; margin-bottom: 3rem; }
+        
+        /* Markets Grid */
+        .markets-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+        .market-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-align: center; transition: all 0.3s; }
+        .market-card:hover { border-color: var(--accent-green); transform: translateY(-4px); }
+        .market-flag { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .market-name { font-weight: 600; margin-bottom: 0.25rem; }
+        .market-code { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-muted); }
+        
+        /* Methodology */
+        .method-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 2.5rem; overflow-x: auto; }
+        .method-pre { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1.6; color: var(--text-secondary); white-space: pre; }
+        .method-pre .green { color: var(--accent-green); }
+        .method-pre .blue { color: var(--accent-blue); }
+        .method-pre .purple { color: var(--accent-purple); }
+        .method-pre .orange { color: var(--accent-orange); }
+        
+        /* Selection Process */
+        .selection-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .selection-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; }
+        .selection-card h3 { display: flex; align-items: center; gap: 0.75rem; font-size: 1.1rem; margin-bottom: 1rem; }
+        .selection-card .step-num { width: 32px; height: 32px; background: rgba(0, 255, 136, 0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent-green); }
+        .selection-card p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; }
+        .selection-features { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .selection-feature { font-size: 0.7rem; padding: 0.35rem 0.6rem; background: rgba(0, 255, 136, 0.1); border-radius: 4px; color: var(--accent-green); }
+        
+        /* Tech Stack */
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; }
+        .tech-category { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
+        .tech-category h4 { font-size: 0.75rem; color: var(--accent-green); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .tech-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tech-item { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; padding: 0.4rem 0.65rem; background: var(--bg-secondary); border-radius: 6px; }
+        
+        footer { padding: 3rem 4rem; text-align: center; border-top: 1px solid var(--border-color); }
+        .footer-nav { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .footer-nav a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .footer-nav a:hover { color: var(--accent-green); }
+        .footer-copy { color: var(--text-muted); font-size: 0.85rem; }
+        
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @media (max-width: 768px) { nav { padding: 1rem 1.5rem; } .nav-title { display: none; } .hero, section { padding: 4rem 1.5rem; } .hero h1 { font-size: 2.5rem; } .markets-grid { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    
+    <nav>
+        <a href="../index.html" class="nav-back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back to Portfolio
+        </a>
+        <span class="nav-title">Pearls Scanner</span>
+        <div class="nav-links">
+            <a href="#markets">Markets</a>
+            <a href="#methodology">Methodology</a>
+            <a href="#tech">Tech Stack</a>
+        </div>
+    </nav>
+    
+    <header class="hero">
+        <div class="hero-badge">LIVE API • Multi-Market</div>
+        <h1><span>Pearls</span> Scanner<br>AEM Clenow Momentum</h1>
+        <p class="hero-description">
+            Multi-market momentum scanner implementing Andreas Clenow's methodology from "Stocks on the Move". 
+            Calculates exponential regression momentum (Slope × R²) across 9 global markets with 
+            two-stage selection: momentum ranking followed by Pearl Score quality assessment.
+        </p>
+        
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-value">9</div>
+                <div class="hero-stat-label">Global Markets</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">250d</div>
+                <div class="hero-stat-label">Regression Period</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">Slope×R²</div>
+                <div class="hero-stat-label">Momentum Formula</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">2-Stage</div>
+                <div class="hero-stat-label">Selection Process</div>
+            </div>
+        </div>
+        
+        <div class="hero-actions">
+            <a href="https://github.com/burdzik2033" target="_blank" class="btn btn-primary">View Source Code</a>
+            <a href="../index.html" class="btn btn-secondary">← Back to Portfolio</a>
+        </div>
+    </header>
+    
+    <!-- Markets Section -->
+    <section id="markets">
+        <div class="section-header">
+            <div class="section-tag">// Coverage</div>
+            <h2 class="section-title">Global Markets</h2>
+        </div>
+        
+        <p class="section-intro">
+            Scanner covers 9 major stock markets worldwide, each with market-specific configuration 
+            for minimum momentum thresholds, volatility filters, and liquidity requirements.
+        </p>
+        
+        <div class="markets-grid">
+            <div class="market-card">
+                <div class="market-flag">🇺🇸</div>
+                <div class="market-name">United States</div>
+                <div class="market-code">NYSE / NASDAQ</div>
+            </div>
+            <div class="market-card">
+                <div class="market-flag">🇬🇧</div>
+                <div class="market-name">United Kingdom</div>
+                <div class="market-code">LSE</div>
+            </div>
+            <div class="market-card">
+                <div class="market-flag">🇩🇪</div>
+                <div class="market-name">Germany</div>
+                <div class="market-code">XETRA</div>
+            </div>
+            <div class="market-card">
+                <div class="market-flag">🇫🇷</div>
+                <div class="market-name">France</div>
+                <div class="market-code">Euronext Paris</div>
+            </div>
+            <div class="market-card">
+                <div class="market-flag">🇪🇸</div>
+                <div class="market-name">Spain</div>
+                <div class="market-code">BME</div>
+            </div>
+            <div class="market-card">
+                <div class="market-flag">🇮🇹</div>
+                <div class="market-name">Italy</div>
+                <div class="market-code">Borsa Italiana</div>
+            </div>
+            <div class="market-card">
+                <div class="market-flag">🇸🇪</div>
+                <div class="market-name">Sweden</div>
+                <div class="market-code">Nasdaq Stockholm</div>
+            </div>
+            <div class="market-card">
+                <div class="market-flag">🇵🇱</div>
+                <div class="market-name">Poland</div>
+                <div class="market-code">GPW</div>
+            </div>
+            <div class="market-card">
+                <div class="market-flag">🇯🇵</div>
+                <div class="market-name">Japan</div>
+                <div class="market-code">TSE</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Methodology -->
+    <section id="methodology">
+        <div class="section-header">
+            <div class="section-tag">// Methodology</div>
+            <h2 class="section-title">Momentum Calculation</h2>
+        </div>
+        
+        <p class="section-intro">
+            Based on Andreas Clenow's approach: fit exponential regression to price data, 
+            then multiply the annualized slope by the R² coefficient. This rewards both 
+            strong upward movement AND consistency of the trend.
+        </p>
+        
+        <div class="method-container">
+            <pre class="method-pre">
+<span class="green">┌───────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="green">│</span>                    <span class="blue">EXPONENTIAL REGRESSION MOMENTUM</span>                          <span class="green">│</span>
+<span class="green">│</span>                                                                               <span class="green">│</span>
+<span class="green">│</span>    <span class="orange">Step 1: Fit Exponential Regression</span>                                       <span class="green">│</span>
+<span class="green">│</span>                                                                               <span class="green">│</span>
+<span class="green">│</span>         ln(price) = a + b × time                                             <span class="green">│</span>
+<span class="green">│</span>                                                                               <span class="green">│</span>
+<span class="green">│</span>         where b = daily slope coefficient                                    <span class="green">│</span>
+<span class="green">│</span>                                                                               <span class="green">│</span>
+<span class="green">│</span>    <span class="orange">Step 2: Annualize the Slope</span>                                               <span class="green">│</span>
+<span class="green">│</span>                                                                               <span class="green">│</span>
+<span class="green">│</span>         annualized_slope = (e^b)^252 - 1                                     <span class="green">│</span>
+<span class="green">│</span>                          = expected annual return                             <span class="green">│</span>
+<span class="green">│</span>                                                                               <span class="green">│</span>
+<span class="green">│</span>    <span class="orange">Step 3: Calculate Momentum Score</span>                                          <span class="green">│</span>
+<span class="green">│</span>                                                                               <span class="green">│</span>
+<span class="green">│</span>         <span class="purple">momentum_250 = annualized_slope_250d × R²_250d</span>                       <span class="green">│</span>
+<span class="green">│</span>         <span class="purple">momentum_125 = annualized_slope_125d × R²_125d</span>                       <span class="green">│</span>
+<span class="green">│</span>                                                                               <span class="green">│</span>
+<span class="green">│</span>         <span class="blue">final_score = average(momentum_250, momentum_125)</span>                    <span class="green">│</span>
+<span class="green">│</span>                                                                               <span class="green">│</span>
+<span class="green">├───────────────────────────────────────────────────────────────────────────────┤</span>
+<span class="green">│</span>                                                                               <span class="green">│</span>
+<span class="green">│</span>    <span class="orange">Why Slope × R²?</span>                                                           <span class="green">│</span>
+<span class="green">│</span>                                                                               <span class="green">│</span>
+<span class="green">│</span>    • High slope + Low R² = volatile, unreliable trend                        <span class="green">│</span>
+<span class="green">│</span>    • Low slope + High R² = consistent but weak trend                         <span class="green">│</span>
+<span class="green">│</span>    • <span class="green">High slope + High R² = strong, consistent trend ✓</span>                       <span class="green">│</span>
+<span class="green">│</span>                                                                               <span class="green">│</span>
+<span class="green">└───────────────────────────────────────────────────────────────────────────────┘</span>
+            </pre>
+        </div>
+    </section>
+    
+    <!-- Selection Process -->
+    <section>
+        <div class="section-header">
+            <div class="section-tag">// Selection</div>
+            <h2 class="section-title">Two-Stage Selection</h2>
+        </div>
+        
+        <div class="selection-grid">
+            <div class="selection-card">
+                <h3><span class="step-num">1</span> Momentum Ranking</h3>
+                <p>
+                    All stocks sorted by momentum score. Top N stocks (configurable per market) 
+                    pass to the second stage. This ensures we only consider stocks with strong, 
+                    consistent upward trends.
+                </p>
+                <div class="selection-features">
+                    <span class="selection-feature">Sort by Score</span>
+                    <span class="selection-feature">Top N Selection</span>
+                    <span class="selection-feature">Min Momentum Filter</span>
+                </div>
+            </div>
+            
+            <div class="selection-card">
+                <h3><span class="step-num">2</span> Pearl Score</h3>
+                <p>
+                    Multi-criteria quality assessment. Evaluates inverse volatility (price/ATR), 
+                    volume consistency, and short-term momentum confirmation.
+                </p>
+                <div class="selection-features">
+                    <span class="selection-feature">Inverse Volatility</span>
+                    <span class="selection-feature">Volume 90d/30d</span>
+                    <span class="selection-feature">Momentum 30d</span>
+                </div>
+            </div>
+            
+            <div class="selection-card">
+                <h3><span class="step-num">3</span> Gap Filter</h3>
+                <p>
+                    Final filter removes stocks with large price gaps that could indicate 
+                    news-driven moves rather than sustainable trends.
+                </p>
+                <div class="selection-features">
+                    <span class="selection-feature">Gap Detection</span>
+                    <span class="selection-feature">Outlier Removal</span>
+                    <span class="selection-feature">Quality Control</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Tech Stack -->
+    <section id="tech">
+        <div class="section-header">
+            <div class="section-tag">// Tech Stack</div>
+            <h2 class="section-title">Technologies Used</h2>
+        </div>
+        
+        <div class="tech-grid">
+            <div class="tech-category">
+                <h4>Backend</h4>
+                <div class="tech-list">
+                    <span class="tech-item">Python 3.11</span>
+                    <span class="tech-item">Flask</span>
+                    <span class="tech-item">pandas</span>
+                    <span class="tech-item">scipy</span>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h4>Data Sources</h4>
+                <div class="tech-list">
+                    <span class="tech-item">TradingView</span>
+                    <span class="tech-item">yfinance</span>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h4>Infrastructure</h4>
+                <div class="tech-list">
+                    <span class="tech-item">Docker</span>
+                    <span class="tech-item">VPS</span>
+                    <span class="tech-item">REST API</span>
+                </div>
+            </div>
+            <div class="tech-category">
+                <h4>Analysis</h4>
+                <div class="tech-list">
+                    <span class="tech-item">Exp. Regression</span>
+                    <span class="tech-item">ATR</span>
+                    <span class="tech-item">Volume Analysis</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-nav">
+            <a href="../index.html">← Back to Portfolio</a>
+            <a href="garp.html">GARP Ranking →</a>
+            <a href="contra.html">Contra Scanner →</a>
+            <a href="options.html">Options Strategy →</a>
+        </div>
+        <p class="footer-copy">© 2025 Marcin Bury | Pearls Scanner (AEM Clenow)</p>
+    </footer>
+</body>
+</html>
