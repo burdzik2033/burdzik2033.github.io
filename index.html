@@ -471,6 +471,8 @@
             padding: 1.5rem;
             display: flex;
             flex-direction: column;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .diagram-title {
@@ -489,7 +491,9 @@
             color: var(--text-secondary);
             white-space: pre;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             flex: 1;
+            min-width: min-content;
         }
         
         .diagram-content .green { color: var(--accent-green); }
@@ -591,6 +595,7 @@
             border-radius: 20px;
             padding: 2.5rem;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .architecture-pre {
@@ -599,6 +604,7 @@
             line-height: 1.5;
             color: var(--text-secondary);
             white-space: pre;
+            min-width: min-content;
         }
         
         .architecture-pre .green { color: var(--accent-green); }
@@ -745,6 +751,60 @@
             .projects-grid { grid-template-columns: 1fr; }
             .hero-cta { flex-direction: column; }
             .about-highlights { grid-template-columns: 1fr; }
+            
+            /* Fix overflow na mobile */
+            .strategy-diagram {
+                padding: 1rem;
+                margin: 0 -1.5rem;
+                border-radius: 0;
+                width: calc(100% + 3rem);
+            }
+            
+            .architecture-container {
+                padding: 1rem;
+                margin: 0 -1.5rem;
+                border-radius: 0;
+                width: calc(100% + 3rem);
+            }
+            
+            .diagram-content, .architecture-pre {
+                font-size: 0.55rem;
+            }
+            
+            .tech-grid { grid-template-columns: 1fr 1fr; }
+            .certs-grid { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr 1fr; }
+            
+            .stat-value { font-size: 1.75rem; }
+            .hero h1 { font-size: 2rem; }
+            .section-title { font-size: 1.75rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .hero, section { padding: 3rem 1rem; }
+            
+            .strategy-diagram, .architecture-container {
+                margin: 0 -1rem;
+                width: calc(100% + 2rem);
+            }
+            
+            .hero-stats { 
+                gap: 1.5rem; 
+                justify-content: space-between;
+            }
+            
+            .stat { flex: 1 1 40%; }
+            
+            .contact-grid { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: 1fr; }
+            
+            .btn { 
+                width: 100%; 
+                justify-content: center; 
+            }
+            
+            .strategy-features { gap: 0.35rem; }
+            .feature-tag { font-size: 0.6rem; padding: 0.25rem 0.5rem; }
         }
     </style>
 </head>

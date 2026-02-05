@@ -234,7 +234,7 @@
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 2.5rem;
-            overflow-x: auto;
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
         }
         
         .flow-pre {
@@ -242,7 +242,7 @@
             font-size: 0.75rem;
             line-height: 1.6;
             color: var(--text-secondary);
-            white-space: pre;
+            white-space: pre; min-width: min-content;
         }
         
         .flow-pre .orange { color: var(--accent-orange); }
@@ -435,9 +435,39 @@
         @media (max-width: 768px) {
             nav { padding: 1rem 1.5rem; }
             .nav-title { display: none; }
+            .nav-links { gap: 0.75rem; }
+            .nav-links a { padding: 0.4rem 0.6rem; font-size: 0.75rem; }
             .hero, section { padding: 4rem 1.5rem; }
             .hero h1 { font-size: 2.5rem; }
             .jury-grid { grid-template-columns: 1fr; }
+            .components-grid { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: 1fr 1fr; }
+            
+            .flow-container {
+                padding: 1rem;
+                margin: 0 -1.5rem;
+                border-radius: 0;
+                width: calc(100% + 3rem);
+            }
+            
+            .flow-pre { font-size: 0.55rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .hero, section { padding: 3rem 1rem; }
+            .hero h1 { font-size: 2rem; }
+            
+            .flow-container {
+                margin: 0 -1rem;
+                width: calc(100% + 2rem);
+            }
+            
+            .flow-pre { font-size: 0.5rem; }
+            .nav-links { display: none; }
+            .tech-grid { grid-template-columns: 1fr; }
+            
+            .btn { width: 100%; justify-content: center; }
+            .hero-actions { flex-direction: column; }
         }
     </style>
 </head>

@@ -390,7 +390,7 @@
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 2rem;
-            overflow-x: auto;
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
         }
         
         .arch-pre {
@@ -398,7 +398,7 @@
             font-size: 0.72rem;
             line-height: 1.6;
             color: var(--text-secondary);
-            white-space: pre;
+            white-space: pre; min-width: min-content;
         }
         
         .arch-pre .yellow { color: var(--accent-yellow); }
@@ -507,9 +507,42 @@
         @media (max-width: 768px) {
             nav { padding: 1rem 1.5rem; }
             .nav-title { display: none; }
+            .nav-links { gap: 0.75rem; }
+            .nav-links a { padding: 0.4rem 0.6rem; font-size: 0.75rem; }
             .hero, section { padding: 4rem 1.5rem; }
             .hero h1 { font-size: 2.5rem; }
             .hero-stats { gap: 2rem; }
+            
+            .arch-container {
+                padding: 1rem;
+                margin: 0 -1.5rem;
+                border-radius: 0;
+                width: calc(100% + 3rem);
+            }
+            
+            .arch-pre { font-size: 0.55rem; }
+            .scoring-grid { grid-template-columns: 1fr; }
+            .intel-grid { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: 1fr 1fr; }
+            .sources-grid { grid-template-columns: 1fr 1fr; }
+        }
+        
+        @media (max-width: 480px) {
+            .hero, section { padding: 3rem 1rem; }
+            .hero h1 { font-size: 2rem; }
+            
+            .arch-container {
+                margin: 0 -1rem;
+                width: calc(100% + 2rem);
+            }
+            
+            .arch-pre { font-size: 0.5rem; }
+            .nav-links { display: none; }
+            .tech-grid { grid-template-columns: 1fr; }
+            .sources-grid { grid-template-columns: 1fr; }
+            
+            .btn { width: 100%; justify-content: center; }
+            .hero-actions { flex-direction: column; }
         }
     </style>
 </head>
